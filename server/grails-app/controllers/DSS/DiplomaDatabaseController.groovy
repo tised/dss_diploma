@@ -1,11 +1,25 @@
 package DSS
 
+import org.apache.commons.codec.digest.DigestUtils
+import org.apache.commons.lang.RandomStringUtils
 import org.codehaus.groovy.grails.web.json.JSONArray
 import org.codehaus.groovy.grails.web.json.JSONObject
 
+import javax.mail.Message
+import javax.mail.MessagingException
+import javax.mail.Session
+import javax.mail.Transport
+import javax.mail.internet.AddressException
+import javax.mail.internet.InternetAddress
+import javax.mail.internet.MimeMessage
+
 class DiplomaDatabaseController {
 
-    def index() {}
+    def index() {
+
+        println DigestUtils.md5Hex( "12345" + "opudiploma" )
+        println DigestUtils.md5Hex( "qwerty" + "opudiploma" )
+    }
 
     def getAllProblems(){
 
@@ -28,6 +42,26 @@ class DiplomaDatabaseController {
             answer
         }
     }
+
+    def checkLogin(){
+
+        /*params:
+        * login
+        * password*/
+
+        println "CHECK LOGIN PARAMS === " + params
+
+        def experts = Experts.getAll()
+        String result = "NEOK";
+        for (Experts expert : experts){
+
+            if (expert.getEmail().equals(params.email) &&
+                     expert.getPassword().equals(params.password))
+                result = "OK" //new JSONObject(expert.toString())
+        }
+
+        render result
+     }
 
     def getCurrentProblem(){
 
@@ -77,5 +111,67 @@ class DiplomaDatabaseController {
         result.save(flush: true)
 
         render "saved result"
+    }
+
+    def addExpert(){
+        /*
+        * email
+        * name_expert
+        * sur_name
+        * password*/
+
+        println "ADD EXPERT PARAMS === " + params
+        Experts expert = new Experts()
+        expert.setEmail(params.email)
+        expert.setNameExpert(params.name)
+        expert.setSurName(params.surName)
+        expert.setPassword(generatePassword())
+        expert.save(flush: true)
+
+        render "OK"
+     }
+
+    private String generatePassword(){
+
+
+        String password = RandomStringUtils.randomAlphanumeric(8)
+
+//        String host = "smtp.gmail.com";
+//        Properties props = System.getProperties();
+//        props.put("mail.smtp.starttls.enable",true);
+//        /* mail.smtp.ssl.trust is needed in script to avoid error "Could not convert socket to TLS"  */
+//        props.setProperty("mail.smtp.ssl.trust", host);
+//        props.put("mail.smtp.auth", true);
+//        props.put("mail.smtp.host", host);
+//        props.put("mail.smtp.user", "ololo@gmail.com");
+//        props.put("mail.smtp.password", "");
+//        props.put("mail.smtp.port", "465");
+//
+//        Session session = Session.getDefaultInstance(props, null);
+//        MimeMessage message = new MimeMessage(session);
+//        message.setFrom(new InternetAddress("ololo@gmail.com"));
+//
+//        InternetAddress toAddress = new InternetAddress("pescala66@gmail.com");
+//
+//        message.addRecipient(Message.RecipientType.TO, toAddress);
+//
+//        message.setSubject("your pass");
+//        message.setText(password);
+//
+//        Transport transport = session.getTransport("smtp");
+//
+//        transport.connect(host, "pescala66@gmail.com", password);
+//
+//        transport.sendMessage(message, message.getAllRecipients());
+//        transport.close();
+
+        return toMd5(password)
+    }
+
+    private String toMd5(String value){
+
+        String salt = "onvoghetilop";
+
+        return DigestUtils.md5Hex( value + salt )
     }
 }

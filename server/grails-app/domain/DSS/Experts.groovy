@@ -13,12 +13,14 @@ class Experts {
     String nameExpert
     String surName
     String email
+    String password
 
 
     static constraints = {
         id(max: 2147483647)
         nameExpert(size: 0..50)
         surName(size: 0..50)
+        password(size: 0..32)
 
     }
 }

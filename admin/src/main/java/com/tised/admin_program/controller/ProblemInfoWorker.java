@@ -73,7 +73,7 @@ public class ProblemInfoWorker {
         dataToSend.add(jsonAlternatives);
 
         HttpClient client = new DefaultHttpClient();
-        HttpPost post = new HttpPost(Addresses.serverAddress);
+        HttpPost post = new HttpPost(Addresses.saveProblem);
 
         MultipartEntity entity = new MultipartEntity();
 
@@ -98,6 +98,12 @@ public class ProblemInfoWorker {
         if (resEntity != null) {
             resEntity.consumeContent();
         }
+    }
+
+    public void clearData(){
+
+        alternatives.getItems().clear();
+        criterias.getItems().clear();
     }
 
 

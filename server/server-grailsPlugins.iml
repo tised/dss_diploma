@@ -4,8 +4,8 @@
     <facet type="web" name="GrailsWeb">
       <configuration>
         <webroots>
-          <root url="file://$MODULE_DIR$/target/work/plugins/database-migration-1.4.0/grails-app/views" relative="/" />
-          <root url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.1/web-app" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/database-migration-1.4.0/grails-app/views" relative="/" />
+          <root url="file://$MODULE_DIR$/plugins/jquery-1.11.1/web-app" relative="/" />
         </webroots>
         <sourceRoots />
       </configuration>
@@ -19,44 +19,57 @@
   </component>
   <component name="NewModuleRootManager" inherit-compiler-output="true">
     <exclude-output />
-    <content url="file://$MODULE_DIR$/target/work/plugins/asset-pipeline-1.9.6">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/asset-pipeline-1.9.6/src/groovy" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/asset-pipeline-1.9.6/grails-app/controllers" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/asset-pipeline-1.9.6/grails-app/services" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/asset-pipeline-1.9.6/grails-app/taglib" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/plugins/asset-pipeline-1.9.6">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/asset-pipeline-1.9.6/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/asset-pipeline-1.9.6/grails-app/controllers" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/asset-pipeline-1.9.6/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/asset-pipeline-1.9.6/grails-app/taglib" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/cache-1.1.7">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/cache-1.1.7/src/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/cache-1.1.7/src/groovy" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/cache-1.1.7/grails-app/services" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/cache-1.1.7/grails-app/taglib" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/plugins/cache-1.1.7">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/cache-1.1.7/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/cache-1.1.7/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/cache-1.1.7/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/cache-1.1.7/grails-app/taglib" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/database-migration-1.4.0">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/database-migration-1.4.0/src/groovy" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/database-migration-1.4.0/grails-app/controllers" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/plugins/database-migration-1.4.0">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/database-migration-1.4.0/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/database-migration-1.4.0/grails-app/controllers" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/hibernate4-4.3.5.5">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/hibernate4-4.3.5.5/src/java" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/plugins/hibernate4-4.3.5.5">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/hibernate4-4.3.5.5/src/java" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.1">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.1/src/groovy" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.1/grails-app/services" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/jquery-1.11.1/grails-app/taglib" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/plugins/jquery-1.11.1">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-1.11.1/src/groovy" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-1.11.1/grails-app/services" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/jquery-1.11.1/grails-app/taglib" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/scaffolding-2.1.2">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/scaffolding-2.1.2/src/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/scaffolding-2.1.2/src/groovy" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/plugins/scaffolding-2.1.2">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/scaffolding-2.1.2/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/scaffolding-2.1.2/src/groovy" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/tomcat-7.0.55">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/tomcat-7.0.55/src/java" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/tomcat-7.0.55/src/groovy" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/plugins/tomcat-7.0.55">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/tomcat-7.0.55/src/java" isTestSource="false" />
+      <sourceFolder url="file://$MODULE_DIR$/plugins/tomcat-7.0.55/src/groovy" isTestSource="false" />
     </content>
-    <content url="file://$MODULE_DIR$/target/work/plugins/webxml-1.4.1">
-      <sourceFolder url="file://$MODULE_DIR$/target/work/plugins/webxml-1.4.1/src/groovy" isTestSource="false" />
+    <content url="file://$MODULE_DIR$/plugins/webxml-1.4.1">
+      <sourceFolder url="file://$MODULE_DIR$/plugins/webxml-1.4.1/src/groovy" isTestSource="false" />
     </content>
-    <orderEntry type="jdk" jdkName="1.6" jdkType="JavaSDK" />
+    <orderEntry type="jdk" jdkName="1.8" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" scope="PROVIDED" name="grails-2.4.3" level="application" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.mojo:dependency-maven-plugin:1.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-project:2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-profile:2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-model:2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-artifact-manager:2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-repository-metadata:2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven.wagon:wagon-provider-api:1.0-alpha-5" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.plexus:plexus-utils:1.0.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.plexus:plexus-container-default:1.0-alpha-8" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.plexus:plexus-archiver:1.0-alpha-3" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: classworlds:classworlds:1.1-alpha-2" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-plugin-api:2.0" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.maven:maven-artifact:2.0" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.codehaus.groovy:groovy-all:2.3.6" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-plugin-rest:2.4.3" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: com.google.code.gson:gson:2.2.4" level="project" />
@@ -173,6 +186,8 @@
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.eclipse.jdt.core.compiler:ecj:3.7.2" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.apache.tomcat.embed:tomcat-embed-core:7.0.55" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: mysql:mysql-connector-java:5.1.6" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.mail:mail:1.4" level="project" />
+    <orderEntry type="library" scope="PROVIDED" name="Maven: javax.activation:activation:1.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-bootstrap:2.4.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.grails:grails-launcher:1.0.5" level="project" />
     <orderEntry type="module-library" exported="">

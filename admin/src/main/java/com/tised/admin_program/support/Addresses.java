@@ -7,5 +7,7 @@ public interface Addresses {
 
     public static String getCurProblem = "http://localhost:8080/server/diplomaDatabase/getCurrentProblem";
     public static String getAllProblems = "http://localhost:8080/server/diplomaDatabase/getAllProblems";
-    public static String serverAddress = "http://localhost:8080/server/problem/saveProblem";
+    public static String saveProblem = "http://localhost:8080/server/problem/saveProblem";
+    public static String addExpert = "http://localhost:8080/server/diplomaDatabase/addExpert";
+    public static String checkLogin = "http://localhost:8080/server/diplomaDatabase/checkLogin";
 }

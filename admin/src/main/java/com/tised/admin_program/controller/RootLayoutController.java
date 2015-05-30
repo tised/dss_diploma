@@ -1,19 +1,17 @@
 package com.tised.admin_program.controller;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+
+import com.tised.admin_program.support.AllertHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
-
 import java.io.IOException;
+
 
 public class RootLayoutController implements Initializable{
 
@@ -23,7 +21,7 @@ public class RootLayoutController implements Initializable{
 	Button startAddingInfo, addAlternative, addCriteria;
 	
 	@FXML
-	Pane addPanelCriterias;
+	Pane addInfoProblemPanel;
 
 	@FXML
 	ListView criteriasList, alternativesList;
@@ -35,18 +33,21 @@ public class RootLayoutController implements Initializable{
 	private ProblemInfoWorker problemWorker;
 	private AnchorPane root;
 
+
 	public void initialize(java.net.URL location,
             java.util.ResourceBundle resources){
 
-		addPanelCriterias.setDisable(true);
+		addInfoProblemPanel.setDisable(true);
 		problemWorker = new ProblemInfoWorker(criteriasList, alternativesList);
+
+		AllertHandler.showLogin();
 	}
 	
 	@FXML
 	public void startFillData(){
 		
 		logger.debug("clicked start fill data");
-		addPanelCriterias.setDisable(false);
+		addInfoProblemPanel.setDisable(false);
 		startAddingInfo.setDisable(true);
 
 		problemWorker.initProblemInput();
@@ -84,11 +85,18 @@ public class RootLayoutController implements Initializable{
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+
+		problemWorker.clearData();
+
+		startAddingInfo.setDisable(false);
+		addInfoProblemPanel.setDisable(true);
+		problem.setText("");
 	}
 
 	@FXML
 	public void addExpertClicked(){
 
+		AllertHandler.showAddExpert();
 		logger.debug("clicked add expert");
 	}
 

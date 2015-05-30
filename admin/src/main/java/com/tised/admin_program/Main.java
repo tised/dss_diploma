@@ -3,6 +3,7 @@ package com.tised.admin_program;
 import java.io.IOException;
 
 import com.tised.admin_program.controller.RootLayoutController;
+import com.tised.admin_program.support.AllertHandler;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
