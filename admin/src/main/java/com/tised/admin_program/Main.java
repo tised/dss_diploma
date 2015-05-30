@@ -1,6 +1,8 @@
 package com.tised.admin_program;
 	
 import java.io.IOException;
+
+import com.tised.admin_program.controller.RootLayoutController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -34,14 +36,13 @@ public class Main extends Application {
             FXMLLoader loader = new FXMLLoader();
             String fxmlFile = "/view/rootLayout.fxml";
             rootLayout = (AnchorPane) loader.load(getClass().getResourceAsStream(fxmlFile));
-
-
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
 
             logger.trace("Application started");
+
         } catch (IOException e) {
             e.printStackTrace();
         }

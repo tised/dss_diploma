@@ -15,37 +15,31 @@
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
                 <Label layoutX="335.0" layoutY="11.0" text="Введите проблему" />
-                <Button layoutX="661.0" layoutY="15.0" mnemonicParsing="false" text="Добавить эксперта" />
-                <TextField layoutX="14.0" layoutY="49.0" prefWidth="772.0" />
-                <Button fx:id="startAddingInfo" layoutX="360.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#addClicked" text="Далее" />
+                <Button fx:id="addExpert" layoutX="661.0" layoutY="15.0" mnemonicParsing="false" onMouseClicked="#addExpertClicked" text="Добавить эксперта" />
+                <TextField fx:id="problem" layoutX="14.0" layoutY="49.0" prefWidth="772.0" />
+                <Button fx:id="startAddingInfo" layoutX="360.0" layoutY="82.0" mnemonicParsing="false" onMouseClicked="#startFillData" text="Далее" />
                 <Pane id="addPanel" fx:id="addPanelCriterias" disable="false" layoutX="0.0" layoutY="111.0" prefHeight="458.0" prefWidth="800.0" visible="true">
                   <children>
-                    <SplitPane disable="false" dividerPositions="0.13043478260869565" focusTraversable="true" layoutX="13.0" layoutY="10.0" orientation="VERTICAL" prefHeight="324.0" prefWidth="382.0">
-                      <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="56.0" prefWidth="380.0">
-                          <children>
-                            <Button fx:id="addCriteria" layoutX="126.0" layoutY="9.0" mnemonicParsing="false" onMouseClicked="#addCriteriaClicked" text="Добавить критерий" />
-                          </children>
-                        </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                      </items>
-                    </SplitPane>
-                    <SplitPane dividerPositions="0.13043478260869565" focusTraversable="true" layoutX="402.0" layoutY="10.0" orientation="VERTICAL" prefHeight="324.0" prefWidth="384.0">
-                      <items>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="157.9998779296875" prefWidth="382.0">
-                          <children>
-                            <Button fx:id="addAlternative" layoutX="116.0" layoutY="10.0" mnemonicParsing="false" text="Добавить альтернативу" />
-                          </children>
-                        </AnchorPane>
-                        <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-                      </items>
-                    </SplitPane>
-                    <Button layoutX="13.0" layoutY="345.0" mnemonicParsing="false" prefWidth="772.0" text="Отправить" />
+                    <Button fx:id="sendProblem" layoutX="13.0" layoutY="345.0" mnemonicParsing="false" onMouseClicked="#sendProblemClicked" prefWidth="772.0" text="Отправить" />
                     <ScrollPane layoutX="14.0" layoutY="378.0" prefHeight="66.0" prefWidth="772.0">
                       <content>
                         <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="200.0" prefWidth="200.0" />
                       </content>
                     </ScrollPane>
+                    <Pane layoutX="13.0" layoutY="14.0" prefHeight="320.0" prefWidth="347.0">
+                      <children>
+                        <Separator layoutX="0.0" layoutY="32.0" prefHeight="16.0" prefWidth="347.0" />
+                        <Button fx:id="addCriteria" layoutX="109.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#addCriteriaClicked" text="Добавить критерий" />
+                        <ListView fx:id="criteriasList" layoutX="1.0" layoutY="48.0" prefHeight="272.0" prefWidth="347.0" />
+                      </children>
+                    </Pane>
+                    <Pane layoutX="417.0" layoutY="14.0" prefHeight="320.0" prefWidth="347.0">
+                      <children>
+                        <Separator layoutX="0.0" layoutY="32.0" prefHeight="16.0" prefWidth="347.0" />
+                        <Button fx:id="addAlternative" layoutX="109.0" layoutY="8.0" mnemonicParsing="false" onMouseClicked="#addAlternativeClicked" text="Добавить альтернативу" />
+                      </children>
+                    </Pane>
+                    <ListView fx:id="alternativesList" layoutX="417.0" layoutY="62.0" prefHeight="272.0" prefWidth="347.0" />
                   </children>
                 </Pane>
               </children>
