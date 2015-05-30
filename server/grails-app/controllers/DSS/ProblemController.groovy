@@ -23,7 +23,7 @@ class ProblemController {
         newUser.setIdUser(Integer.valueOf(params.id_user))
         newUser.save(flush: true)
 
-        render "saved"
+        render "saved" + newUser.getId()
     }
 
     def getProblem(){

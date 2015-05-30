@@ -16,21 +16,16 @@ environments {
     development {
         dataSource {
 
-            dbCreate = 'update'
+            dbCreate = 'validate'
             driverClassName = "com.mysql.jdbc.Driver"
             username = "root"
             password = ""
             url = "jdbc:mysql://dev-mysql:3306/diploma?useUnicode=true&characterEncoding=utf8"
-//            username = "cp2cms"
-//            password = "cp2cmspass"
-//            url = "jdbc:mysql://192.168.100.1:3306/diploma10?useUnicode=true&characterEncoding=utf8"
-
-
         }
     }
     test {
         dataSource {
-            dbCreate = 'update'
+            dbCreate = 'validate'
             driverClassName = "com.mysql.jdbc.Driver"
             username = "root"
             password = ""
@@ -39,7 +34,7 @@ environments {
     }
     production {
         dataSource {
-            dbCreate = 'update'
+            dbCreate = 'validate'
             driverClassName = "com.mysql.jdbc.Driver"
             username = "diploma"
             password = "diploma2pass"
