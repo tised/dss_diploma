@@ -17,8 +17,7 @@ class DiplomaDatabaseController {
 
     def index() {
 
-        println DigestUtils.md5Hex( "12345" + "opudiploma" )
-        println DigestUtils.md5Hex( "qwerty" + "opudiploma" )
+        render "database contr"
     }
 
     def getAllProblems(){

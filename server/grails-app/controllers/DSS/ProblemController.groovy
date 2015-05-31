@@ -12,18 +12,20 @@ class ProblemController {
 
     def saveProblem(){
 
+        println "SAVE PROBLEM PARAMS === " + params
         //  def problem = new JSONObject(params.problem)
-        MaiStorage newUser = new MaiStorage()
+        MaiStorage newMaiProblem = new MaiStorage()
 
-        JSONObject jo = new JSONObject(params.problem)
-        println jo
-        newUser.setProblem(params.problem)
-        newUser.setAlternatives(params.alternatives)
-        newUser.setCriterias(params.criterias)
-        newUser.setIdUser(Integer.valueOf(params.id_user))
-        newUser.save(flush: true)
+        JSONArray newProblem = new JSONArray(params.new_problem)
 
-        render "saved" + newUser.getId()
+        newMaiProblem.setProblem(newProblem.get(0).toString())
+        newMaiProblem.setCriterias(newProblem.get(1).toString())
+        newMaiProblem.setAlternatives(newProblem.get(2).toString())
+        newMaiProblem.setIdUser(Integer.valueOf(params.id_user))
+
+        newMaiProblem.save(flush: true)
+
+        render "saved" + newMaiProblem.getId()
     }
 
     def getProblem(){

@@ -10,6 +10,7 @@ import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
+import org.codehaus.groovy.grails.web.json.JSONArray;
 import org.codehaus.groovy.grails.web.json.JSONException;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -24,7 +25,7 @@ public class ServerSetter {
 
     public ServerSetter(){}
 
-    public static String addExpertToServer(String name, String surName, String email){
+    public String addExpertToServer(String name, String surName, String email){
 
         String result = "";
         try {
@@ -60,7 +61,7 @@ public class ServerSetter {
         return result;
     }
 
-    public static String checkLogin(String email, String password){
+    public String checkLogin(String email, String password){
         String result = "";
         try {
             HttpClient client = new DefaultHttpClient();
@@ -93,5 +94,34 @@ public class ServerSetter {
         }
 
         return result;
+    }
+
+    public void addProblemToServer(JSONArray dataToSend) throws IOException {
+
+        HttpClient client = new DefaultHttpClient();
+        HttpPost post = new HttpPost(Addresses.saveProblem);
+
+        MultipartEntity entity = new MultipartEntity();
+
+        try {
+            entity.addPart("new_problem",new StringBody(dataToSend.toString()));
+            entity.addPart("id_user",new StringBody("1"));
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        post.setEntity(entity);
+
+        HttpResponse response = client.execute(post);
+
+        HttpEntity resEntity = response.getEntity();
+
+        if (resEntity != null) {
+            System.out.println("server answer: " + EntityUtils.toString(resEntity));
+        }
+        if (resEntity != null) {
+            resEntity.consumeContent();
+        }
+
     }
 }

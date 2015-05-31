@@ -26,7 +26,7 @@ public class AllertHandler {
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("");
         dialog.setHeaderText("Look, a Custom Login Dialog");
-
+        ServerSetter serverSetter = new ServerSetter();
 // Set the button types.
         ButtonType loginButtonType = new ButtonType("Login", ButtonBar.ButtonData.OK_DONE);
         ButtonType cancelButtonType = new ButtonType("cancel", ButtonBar.ButtonData.OK_DONE);
@@ -39,10 +39,11 @@ public class AllertHandler {
         grid.setPadding(new Insets(20, 150, 10, 10));
 
         TextField login = new TextField();
+        login.setText("lol@gmail.com");
         login.setPromptText("Username");
         PasswordField password = new PasswordField();
         password.setPromptText("Password");
-
+        password.setText("12345");
         grid.add(new Label("Username:"), 0, 0);
         grid.add(login, 1, 0);
         grid.add(new Label("Password:"), 0, 1);
@@ -74,7 +75,7 @@ public class AllertHandler {
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == loginButtonType) {
                 logger.debug("login == " + login.getText() + " pass === " + toMd5(password.getText()));
-                String res = ServerSetter.checkLogin(login.getText(), toMd5(password.getText()));
+                String res = serverSetter.checkLogin(login.getText(), toMd5(password.getText()));
                 return new Pair<>("result", res);
             }
             return null;
@@ -97,7 +98,7 @@ public class AllertHandler {
 
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("Добавить эксперта");
-
+        ServerSetter serverSetter = new ServerSetter();
 // Set the button types.
         ButtonType loginButtonType = new ButtonType("Добавить", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(loginButtonType, ButtonType.CANCEL);
@@ -139,7 +140,7 @@ public class AllertHandler {
 // Convert the result to a username-password-pair when the login button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == loginButtonType) {
-                String res = ServerSetter.addExpertToServer(username.getText(), surName.getText(), email.getText());
+                String res = serverSetter.addExpertToServer(username.getText(), surName.getText(), email.getText());
                 return new Pair<>("result", res);
             }
             return null;

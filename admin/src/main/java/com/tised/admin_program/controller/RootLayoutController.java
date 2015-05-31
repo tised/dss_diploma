@@ -1,12 +1,13 @@
 package com.tised.admin_program.controller;
 
 
+import com.tised.admin_program.model.DataContainer;
 import com.tised.admin_program.support.AllertHandler;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.Pane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -16,6 +17,8 @@ import java.io.IOException;
 public class RootLayoutController implements Initializable{
 
     final static Logger logger = LogManager.getLogger(RootLayoutController.class);
+	DataContainer dataContainer;
+
 
 	@FXML
 	Button startAddingInfo, addAlternative, addCriteria;
@@ -29,17 +32,37 @@ public class RootLayoutController implements Initializable{
 	@FXML
 	TextField problem;
 
-	private Scene scene;
-	private ProblemInfoWorker problemWorker;
-	private AnchorPane root;
+	@FXML
+	TabPane tabs;
 
+	@FXML
+	Tab addProblemTab, solveProblemTab;
+
+	private AddProblemWorker problemWorker;
 
 	public void initialize(java.net.URL location,
             java.util.ResourceBundle resources){
 
+		dataContainer = new DataContainer();
 		addInfoProblemPanel.setDisable(true);
-		problemWorker = new ProblemInfoWorker(criteriasList, alternativesList);
 
+		problemWorker = new AddProblemWorker(criteriasList, alternativesList, dataContainer);
+
+		tabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Tab> arg0,
+								Tab arg1, Tab arg2) {
+
+				if(arg2 == solveProblemTab) {
+					logger.debug("solve problem tab chosed");
+				}
+
+				if(arg2 == addProblemTab) {
+					logger.debug("add problem tab chosed");
+				}
+			}
+		});
 		AllertHandler.showLogin();
 	}
 	
