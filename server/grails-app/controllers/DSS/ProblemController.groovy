@@ -33,9 +33,9 @@ class ProblemController {
         def problem = MaiStorage.get(MaiStorage.last().id)
 
         JSONArray answer = new JSONArray()
-        answer.put(problem.problem.replace("\"",""))
+        answer.put(problem.problem)
         answer.put(new JSONArray(problem.alternatives))
-        answer.put(new JSONArray(problem.criterias)   )
+        answer.put(new JSONArray(problem.criterias))
 
         render(contentType: "application/json") {
             answer

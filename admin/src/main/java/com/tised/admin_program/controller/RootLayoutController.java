@@ -1,6 +1,5 @@
 package com.tised.admin_program.controller;
 
-
 import com.tised.admin_program.model.DataContainer;
 import com.tised.admin_program.support.AllertHandler;
 import javafx.beans.value.ChangeListener;
@@ -8,17 +7,16 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import java.io.IOException;
 
-
 public class RootLayoutController implements Initializable{
 
     final static Logger logger = LogManager.getLogger(RootLayoutController.class);
 	DataContainer dataContainer;
-
 
 	@FXML
 	Button startAddingInfo, addAlternative, addCriteria;
@@ -38,7 +36,11 @@ public class RootLayoutController implements Initializable{
 	@FXML
 	Tab addProblemTab, solveProblemTab;
 
+	@FXML
+	GridPane problemsFromServer;
+
 	private AddProblemWorker problemWorker;
+	private SolveProblemWorker solveWorker;
 
 	public void initialize(java.net.URL location,
             java.util.ResourceBundle resources){
@@ -47,6 +49,7 @@ public class RootLayoutController implements Initializable{
 		addInfoProblemPanel.setDisable(true);
 
 		problemWorker = new AddProblemWorker(criteriasList, alternativesList, dataContainer);
+		solveWorker = new SolveProblemWorker(dataContainer, problemsFromServer);
 
 		tabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 
@@ -56,10 +59,14 @@ public class RootLayoutController implements Initializable{
 
 				if(arg2 == solveProblemTab) {
 					logger.debug("solve problem tab chosed");
+
+					solveWorker.init();
 				}
 
 				if(arg2 == addProblemTab) {
 					logger.debug("add problem tab chosed");
+
+
 				}
 			}
 		});

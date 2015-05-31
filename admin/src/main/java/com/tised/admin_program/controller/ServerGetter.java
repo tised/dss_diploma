@@ -25,11 +25,12 @@ public class ServerGetter {
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(ServerGetter.class);
     DataContainer data;
 
-    public ServerGetter(){
+    public ServerGetter(DataContainer data){
 
+        this.data = data;
     }
 
-    private void downloadProblems(){
+    public void downloadProblems(){
 
         try {
             HttpClient client = new DefaultHttpClient();
@@ -46,18 +47,54 @@ public class ServerGetter {
 
             if (resEntity != null) {
                 String answer = EntityUtils.toString(resEntity);
-                System.out.println("server answer: " + answer);
+                System.out.println("get all problems answer: " + answer);
                 data.setProblemsFromServer(new JSONArray(answer));
             }
             if (resEntity != null) {
                 resEntity.consumeContent();
             }
         } catch (UnsupportedEncodingException ex) {
-            logger.debug(ex);
+            logger.error(ex);
         } catch (IOException ex) {
-            logger.debug(ex);
+            logger.error(ex);
         } catch (JSONException ex) {
-            logger.debug(ex);
+            logger.error(ex);
         }
+    }
+
+    public JSONArray downloadCurProblem(String id){
+
+        JSONArray problems = null;
+        try {
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(Addresses.getCurProblem);
+
+            MultipartEntity entity = new MultipartEntity();
+
+            entity.addPart("id_problem", new StringBody(id));
+            post.setEntity(entity);
+
+            HttpResponse response = client.execute(post);
+
+            HttpEntity resEntity = response.getEntity();
+
+            if (resEntity != null) {
+                String answer = EntityUtils.toString(resEntity);
+                logger.debug("get cur problem answer: " + answer);
+
+                problems = new JSONArray(answer);
+            }
+            if (resEntity != null) {
+                resEntity.consumeContent();
+            }
+        } catch (UnsupportedEncodingException ex) {
+            logger.error(ex);
+        } catch (IOException ex) {
+            logger.error(ex);
+        } catch (JSONException ex) {
+            logger.error(ex);
+        }
+
+        return problems;
     }
 }

@@ -51,7 +51,7 @@
           <content>
             <AnchorPane id="Content" minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
               <children>
-                <GridPane gridLinesVisible="true" layoutX="14.0" layoutY="20.0" prefHeight="541.0" prefWidth="245.0">
+                <GridPane fx:id="problemsFromServer" gridLinesVisible="true" layoutX="14.0" layoutY="21.0" prefHeight="-1.0" prefWidth="264.0">
                   <children>
                     <Label alignment="CENTER" prefWidth="98.0" text="№проблемы" textAlignment="CENTER" GridPane.columnIndex="0" GridPane.rowIndex="0" />
                     <Label alignment="CENTER" prefWidth="108.0" text="Кол-во экспертов" GridPane.columnIndex="1" GridPane.rowIndex="0" />
@@ -62,16 +62,14 @@
                     <ColumnConstraints hgrow="SOMETIMES" maxWidth="65.0" minWidth="2.0" prefWidth="38.0" />
                   </columnConstraints>
                   <rowConstraints>
-                    <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="28.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="339.0" minHeight="10.0" prefHeight="24.0" vgrow="SOMETIMES" />
-                    <RowConstraints maxHeight="489.0" minHeight="10.0" prefHeight="489.0" vgrow="SOMETIMES" />
+                    <RowConstraints maxHeight="180.0" minHeight="10.0" prefHeight="22.0" vgrow="SOMETIMES" />
                   </rowConstraints>
                 </GridPane>
                 <VBox id="VBox" alignment="CENTER" layoutX="289.0" layoutY="4.0" prefHeight="245.0" spacing="5.0">
                   <children>
                     <ScrollPane id="ScrollPane" prefHeight="177.0" prefViewportHeight="242.5" prefViewportWidth="499.0" VBox.vgrow="ALWAYS">
                       <content>
-                        <GridPane gridLinesVisible="true" prefWidth="496.0">
+                        <GridPane fx:id="currentProblemFromServer" gridLinesVisible="true" prefWidth="496.0">
                           <columnConstraints>
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
                             <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
