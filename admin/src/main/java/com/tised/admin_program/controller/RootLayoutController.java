@@ -37,7 +37,7 @@ public class RootLayoutController implements Initializable{
 	Tab addProblemTab, solveProblemTab;
 
 	@FXML
-	GridPane problemsFromServer;
+	GridPane problemsFromServer, currentProblemFromServer;
 
 	private AddProblemWorker problemWorker;
 	private SolveProblemWorker solveWorker;
@@ -49,7 +49,7 @@ public class RootLayoutController implements Initializable{
 		addInfoProblemPanel.setDisable(true);
 
 		problemWorker = new AddProblemWorker(criteriasList, alternativesList, dataContainer);
-		solveWorker = new SolveProblemWorker(dataContainer, problemsFromServer);
+		solveWorker = new SolveProblemWorker(dataContainer, problemsFromServer, currentProblemFromServer);
 
 		tabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 
