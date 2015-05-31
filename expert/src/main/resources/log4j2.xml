@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Configuration>
+    <Properties>
+        <Property name="log-path">logs</Property>
+    </Properties>
+
+    <Appenders>
+
+        <Console name="Console" target="SYSTEM_OUT">
+            <PatternLayout>
+                <Pattern> [%d{ABSOLUTE}] [%t] %msg%n</Pattern>
+            </PatternLayout>
+        </Console>
+
+        <RollingFile name="Logger" fileName="${log-path}/log.log" filePattern="${log-path}/app-%d{MM-dd-yyyy}-log.gz">
+            <PatternLayout>
+                <Pattern>[%d{ABSOLUTE}] [%t] [%-5level] [%32.32c] - %msg%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="1" modulate="true"/>
+            </Policies>
+        </RollingFile>
+
+    </Appenders>
+
+    <Loggers>
+        <!--
+                            f***** root logger
+            remove them using as root com.glhf.<root-project-package>
+        -->
+        <Logger name="com.tised.expert" level="trace" additivity="false">
+            <!-- console wouldn't react for information from debug  level -->
+            <AppenderRef ref="Logger" level="debug"/>
+            <AppenderRef ref="Console" level="trace"/>
+        </Logger>
+    </Loggers>
+</Configuration> 
