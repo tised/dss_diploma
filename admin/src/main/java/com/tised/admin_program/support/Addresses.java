@@ -10,4 +10,5 @@ public interface Addresses {
     public static String saveProblem = "http://localhost:8080/server/problem/saveProblem";
     public static String addExpert = "http://localhost:8080/server/diplomaDatabase/addExpert";
     public static String checkLogin = "http://localhost:8080/server/diplomaDatabase/checkLogin";
+    public static String getResultAlternative = "http://localhost:8080/server/problem/kemeni";
 }

@@ -19,7 +19,7 @@ public class RootLayoutController implements Initializable{
 	DataContainer dataContainer;
 
 	@FXML
-	Button startAddingInfo, addAlternative, addCriteria;
+	Button startAddingInfo, addAlternative, addCriteria, getResultButton;
 	
 	@FXML
 	Pane addInfoProblemPanel;
@@ -32,6 +32,9 @@ public class RootLayoutController implements Initializable{
 
 	@FXML
 	TabPane tabs;
+
+	@FXML
+	Label resultAlternative;
 
 	@FXML
 	Tab addProblemTab, solveProblemTab;
@@ -49,7 +52,7 @@ public class RootLayoutController implements Initializable{
 		addInfoProblemPanel.setDisable(true);
 
 		problemWorker = new AddProblemWorker(criteriasList, alternativesList, dataContainer);
-		solveWorker = new SolveProblemWorker(dataContainer, problemsFromServer, currentProblemFromServer);
+		solveWorker = new SolveProblemWorker(dataContainer, problemsFromServer, currentProblemFromServer, resultAlternative);
 
 		tabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 
@@ -70,6 +73,7 @@ public class RootLayoutController implements Initializable{
 				}
 			}
 		});
+
 		AllertHandler.showLogin();
 	}
 	
@@ -128,6 +132,14 @@ public class RootLayoutController implements Initializable{
 
 		AllertHandler.showAddExpert();
 		logger.debug("clicked add expert");
+	}
+
+	@FXML
+	public void getResultButtonClick(){
+
+		ServerGetter getter = new ServerGetter();
+
+		resultAlternative.setText("Результат: " + String.valueOf(getter.getResultFromProblem(resultAlternative.getId())));
 	}
 
 }

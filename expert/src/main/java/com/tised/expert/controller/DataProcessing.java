@@ -41,13 +41,13 @@ public class DataProcessing {
 
     public Boolean startProcess(ArrayList<String> arr, String t) {
 
+        if (valOfAlternatives == data.getMnemonicCriterias().size())
+            return false;
+
+
         this.typeOf = t;
 
         workTable.getChildren().clear();
-
-
-        if (valOfAlternatives == data.getMnemonicCriterias().size())
-            return false;
 
         subR = 0; subC = 1;
 

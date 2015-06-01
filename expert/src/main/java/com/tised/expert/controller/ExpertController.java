@@ -1,6 +1,7 @@
 package com.tised.expert.controller;
 
 import com.tised.expert.model.DataContainer;
+import com.tised.expert.support.AllertHandler;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -67,6 +68,7 @@ public class ExpertController implements Initializable {
     public void initialize(java.net.URL location,
                            java.util.ResourceBundle resources) {
 
+        AllertHandler.showLogin();
     }
 
     public void restartButtonClick(){

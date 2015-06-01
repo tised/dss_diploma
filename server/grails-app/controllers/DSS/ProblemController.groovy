@@ -4,6 +4,8 @@ import DomainEntities.ExpertResults
 import DomainEntities.MaiStorage
 import org.codehaus.groovy.grails.web.json.JSONArray
 
+import java.text.DecimalFormat
+
 class ProblemController {
 
     def index() {
@@ -110,30 +112,50 @@ class ProblemController {
 
     def kemeni(){
 
-        def startArray = [
-                [1, 2, 2, 6, 3, 3, 4, 7, 1, 2, 5],
-                [1, 4, 3, 6, 11, 10, 7, 9, 2, 5, 8],
-                [1, 4, 8, 7, 6, 10, 11, 5, 3, 2, 9],
-                [3, 1, 4, 5, 6, 8, 5, 8, 3, 2, 7],
-                [7, 9, 4, 6, 5, 3, 2, 8, 3, 1, 10],
-                [1, 1, 3, 2, 3, 5, 4, 6, 2, 1, 4],
-                [1, 1, 2, 2, 4, 3, 4, 1, 2, 2, 5],
-                [1, 2, 3, 5, 3, 3, 4, 2, 3, 4, 6],
-                [1, 3, 4, 2, 3, 4, 4, 5, 4, 1, 6],
-                [1, 4, 4, 2, 4, 4, 4, 3, 3, 5, 6],
-                [2, 5, 5, 6, 7, 7, 7, 3, 4, 1, 8],
-                [2, 1, 4, 5, 2, 6, 1, 7, 3, 1, 3],
-                [3, 2, 1, 5, 6, 7, 3, 3, 4, 5, 6],
-                [3, 2, 4, 2, 6, 7, 5, 6, 4, 1, 8],
-                [2, 1, 3, 5, 7, 8, 10, 3, 4, 6, 9],
-                [1, 5, 3, 5, 6, 6, 6, 2, 4, 1, 5],
-                [1, 4, 4, 9, 7, 8, 6, 2, 5, 3, 10],
-                [1, 4, 2, 3, 5, 5, 7, 8, 3, 5, 6]
-        ] as float[][];
+        println "KEMENI PARAMS === " + params
 
-        startArray = unleashMatrix(startArray)
+//        def startArray = [
+//                [1, 2, 2, 6, 3, 3, 4, 7, 1, 2, 5],
+//                [1, 4, 3, 6, 11, 10, 7, 9, 2, 5, 8],
+//                [1, 4, 8, 7, 6, 10, 11, 5, 3, 2, 9],
+//                [3, 1, 4, 5, 6, 8, 5, 8, 3, 2, 7],
+//                [7, 9, 4, 6, 5, 3, 2, 8, 3, 1, 10],
+//                [1, 1, 3, 2, 3, 5, 4, 6, 2, 1, 4],
+//                [1, 1, 2, 2, 4, 3, 4, 1, 2, 2, 5],
+//                [1, 2, 3, 5, 3, 3, 4, 2, 3, 4, 6],
+//                [1, 3, 4, 2, 3, 4, 4, 5, 4, 1, 6],
+//                [1, 4, 4, 2, 4, 4, 4, 3, 3, 5, 6],
+//                [2, 5, 5, 6, 7, 7, 7, 3, 4, 1, 8],
+//                [2, 1, 4, 5, 2, 6, 1, 7, 3, 1, 3],
+//                [3, 2, 1, 5, 6, 7, 3, 3, 4, 5, 6],
+//                [3, 2, 4, 2, 6, 7, 5, 6, 4, 1, 8],
+//                [2, 1, 3, 5, 7, 8, 10, 3, 4, 6, 9],
+//                [1, 5, 3, 5, 6, 6, 6, 2, 4, 1, 5],
+//                [1, 4, 4, 9, 7, 8, 6, 2, 5, 3, 10],
+//                [1, 4, 2, 3, 5, 5, 7, 8, 3, 5, 6]
+//        ] as float[][];
 
-        //double[][] startArray = [[5, 3.5, 1, 3.5, 2], [4, 5, 2, 3, 1],[ 5, 4, 1, 3, 2,], [5, 3.5, 1.5, 3.5, 1.5], [5, 4, 1, 3, 2],[4.5, 4.5, 2, 3, 1]] ;
+        def results = ExpertResults.findAllByIdProblem(Integer.valueOf(params.id_problem),null)
+        def startArray = [];
+
+        for (ExpertResults res : results){
+
+            JSONArray arr = new JSONArray(res.result_vector)
+            float[] sub = new float[arr.length()]
+            for (int i = 0; i < arr.length(); i++){
+                sub[i] = precision(Double.valueOf(arr.get(i)) * 8 + 1, 0);
+            }
+            println sub
+
+            startArray.add(sub)
+        }
+
+
+        startArray = unleashMatrix(startArray as float[][])
+
+        println startArray
+
+        //startArray = [[5, 3.5, 1, 3.5, 2], [4, 5, 2, 3, 1],[ 5, 4, 1, 3, 2,], [5, 3.5, 1.5, 3.5, 1.5], [5, 4, 1, 3, 2],[4.5, 4.5, 2, 3, 1]] as double[][];
         println "start array is === " + startArray
 
         int cols = startArray[0].size(), rows = startArray.length;
@@ -172,12 +194,28 @@ class ProblemController {
             }
         }
 
-        println pairComp
-        calcKemeni(pairComp)
-        render "ready"
+       // println pairComp
+       // calcKemeni(pairComp)
+        render calcKemeni(pairComp)
     }
 
-    def void calcKemeni(double[][] arr){
+    public static double precision(double value, int places) {
+        if (places < 0) throw new IllegalArgumentException();
+
+        long factor = (long) Math.pow(10, places);
+        value = value * factor;
+        long tmp = Math.round(value);
+        return (double) tmp / factor;
+    }
+
+//    private void fillStartArray(int id, ){
+//
+//        ExpertResults results = ExpertResults.get(id)
+//
+//
+//    }
+
+    def int calcKemeni(double[][] arr){
 
         def pairsArr = arr;
 
@@ -227,6 +265,7 @@ class ProblemController {
             }
         }
         println "min == " + sumArr.collect().toList().findIndexOf {it == sumArr.collect().toList().min()}
+        return sumArr.collect().toList().findIndexOf {it == sumArr.collect().toList().min()}
     }
 
     def float processKem(def arr1, def arr2, int cols){

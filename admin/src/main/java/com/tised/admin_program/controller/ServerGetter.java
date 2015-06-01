@@ -30,6 +30,8 @@ public class ServerGetter {
         this.data = data;
     }
 
+    public ServerGetter(){}
+
     public void downloadProblems(){
 
         try {
@@ -96,5 +98,41 @@ public class ServerGetter {
         }
 
         return problems;
+    }
+
+    public int getResultFromProblem(String id){
+
+        int resAl = 0;
+        try {
+            HttpClient client = new DefaultHttpClient();
+            HttpPost post = new HttpPost(Addresses.getResultAlternative);
+
+            MultipartEntity entity = new MultipartEntity();
+
+            entity.addPart("id_problem", new StringBody(id));
+            post.setEntity(entity);
+
+            HttpResponse response = client.execute(post);
+
+            HttpEntity resEntity = response.getEntity();
+
+            if (resEntity != null) {
+                String answer = EntityUtils.toString(resEntity);
+                logger.debug("get result alternative answer: " + answer);
+                resAl = Integer.valueOf(answer);
+
+            }
+            if (resEntity != null) {
+                resEntity.consumeContent();
+            }
+        } catch (UnsupportedEncodingException ex) {
+            logger.error(ex);
+        } catch (IOException ex) {
+            logger.error(ex);
+        } catch (JSONException ex) {
+            logger.error(ex);
+        }
+
+        return resAl;
     }
 }

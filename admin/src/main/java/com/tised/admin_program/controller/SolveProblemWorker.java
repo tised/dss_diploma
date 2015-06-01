@@ -18,17 +18,19 @@ import org.codehaus.groovy.grails.web.json.JSONObject;
 public class SolveProblemWorker {
 
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(SolveProblemWorker.class);
+    private final Label result;
 
     private DataContainer dataContainer;
     private GridPane problemsFromServerPane, currentProblemPane;
     private ServerGetter getter;
 
 
-    public SolveProblemWorker(DataContainer dataContainer, GridPane problemsFromSever, GridPane currentProblemFromServer){
+    public SolveProblemWorker(DataContainer dataContainer, GridPane problemsFromSever, GridPane currentProblemFromServer, Label res){
 
         this.dataContainer = dataContainer;
         this.problemsFromServerPane = problemsFromSever;
         this.currentProblemPane = currentProblemFromServer;
+        this.result = res;
     }
 
     public void init() {
@@ -36,8 +38,8 @@ public class SolveProblemWorker {
         getter = new ServerGetter(dataContainer);
         getter.downloadProblems();
 
-        problemsFromServerPane.getChildren().clear();
-        problemsFromServerPane.setGridLinesVisible(true);
+//        problemsFromServerPane.getChildren().clear();
+//        problemsFromServerPane.setGridLinesVisible(true);
         currentProblemPane.getChildren().clear();
         currentProblemPane.setGridLinesVisible(true);
 
@@ -59,12 +61,13 @@ public class SolveProblemWorker {
 
                 Button getCurrentProblemButton = new Button(">>>");
                 getCurrentProblemButton.setId(row.get("id_problem").toString());
+
                 getCurrentProblemButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
                     @Override
                     public void handle(MouseEvent event) {
                         logger.debug("clicked show current problem with id === " + getCurrentProblemButton.getId());
                         currentProblemPane.getChildren().clear();
-
+                        result.setId(getCurrentProblemButton.getId());
                         JSONArray curProblemArray = getter.downloadCurProblem(getCurrentProblemButton.getId());
 
                         int row = 0;
