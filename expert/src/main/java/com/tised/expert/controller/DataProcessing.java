@@ -2,13 +2,14 @@ package com.tised.expert.controller;
 
 import com.tised.expert.model.DataContainer;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.ColumnConstraints;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.RowConstraints;
+import javafx.scene.layout.Pane;
 import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+import java.io.*;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 
@@ -20,33 +21,35 @@ public class DataProcessing {
     final static Logger logger = LogManager.getLogger(DataProcessing.class);
 
     GridPane workTable;
-    Label leftOp, rightOp, consistency;
+    Label leftOp, rightOp, consistency, subCrit;
     int sizeOfArr, valOfAlternatives = 0;
     DataContainer data;
     int subR = 0, subC = 1;
     String typeOf;
+    String dir = "..\\expert\\", nameOfFile = dir + "C.txt";
+    Scene scene;
 
-    public DataProcessing(DataContainer data, GridPane workTable, Label leftOp, Label rightOp, Label consistency){
+    public DataProcessing(DataContainer data, Scene s){
 
         this.data = data;
-        this.workTable = workTable;
-        this.leftOp = leftOp;
-        this.rightOp = rightOp;
-        this.consistency = consistency;
+        this.scene = s;
+        this.workTable = (GridPane) scene.lookup("#workTable");
+        this.leftOp = (Label) scene.lookup("#leftOp");
+        this.rightOp = (Label) scene.lookup("#rightOp");
+        this.consistency = (Label) scene.lookup("#consistency");
+        this.subCrit = (Label) scene.lookup("#subCrit");
     }
 
     public Boolean startProcess(ArrayList<String> arr, String t) {
 
         this.typeOf = t;
-
+        workTable.getChildren().clear();
         if (valOfAlternatives == data.getMnemonicCriterias().size())
             return false;
 
         subR = 0; subC = 1;
 
         sizeOfArr=arr.size()+1;
-//        workTable.getRowConstraints().addAll(new RowConstraints(sizeOfArr));
-//        workTable.getColumnConstraints().addAll(new ColumnConstraints(sizeOfArr));
 
         for (int i = 0 ; i < sizeOfArr-1; i++){
 
@@ -75,8 +78,10 @@ public class DataProcessing {
 
             leftOp.setText(data.getMnemonicAlternatives().get(subR));
             rightOp.setText(data.getMnemonicAlternatives().get(subC));
-        //    subCrit.setText(data.getMnemonicCriterias().get(valOfAlternatives));
+
+            subCrit.setText(data.getMnemonicCriterias().get(valOfAlternatives));
             valOfAlternatives++;
+            nameOfFile = dir + "A" + valOfAlternatives + ".txt";
         }
 
         return true;
@@ -174,6 +179,14 @@ public class DataProcessing {
             logger.debug(subCon[l][0]);
         }
 
+        try {
+            saveToFile(nameOfFile, subCon, l);
+        } catch (UnsupportedEncodingException ex) {
+            logger.error( ex);
+        } catch (IOException ex) {
+            logger.error(ex);
+        }
+
         sumCon = 0;
         double alpha = 0;
         for (int i = 0; i < c-1; i++){
@@ -202,6 +215,25 @@ public class DataProcessing {
             }
         }
         return null;
+    }
+
+    private void saveToFile(String f, double[][] array, int len) throws FileNotFoundException, UnsupportedEncodingException, IOException {
+
+        File file = new File(f);
+        if (f.contains("C"))
+            data.setCalculatedPrioritys(array);
+        logger.debug("file === " + f);
+
+        if(!file.exists()){
+            file.getParentFile().mkdirs();
+            file.createNewFile();
+        }
+
+        PrintWriter writer = new PrintWriter(f, "UTF-8");
+        for (int i = 0; i < len; i++){
+            writer.println(array[i][0]);
+        }
+        writer.close();
     }
 
     private static Float precision(Float d) {

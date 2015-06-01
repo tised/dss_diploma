@@ -1,5 +1,6 @@
 package com.tised.expert;
 
+import com.tised.expert.controller.ExpertController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -42,6 +43,9 @@ public class Main extends Application {
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
             primaryStage.show();
+            ExpertController controller = (ExpertController) loader.getController();
+            controller.setScene(scene);
+            controller.init();
 
             logger.trace("Application started");
 

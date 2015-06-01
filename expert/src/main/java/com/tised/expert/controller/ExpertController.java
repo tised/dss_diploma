@@ -5,10 +5,13 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
+import javafx.stage.Stage;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -32,41 +35,34 @@ public class ExpertController implements Initializable {
             "Очень большое превосходство"};
 
     @FXML
-    Button restartButton, startMAIProcessing, nextOp;
+    Button restartButton, startMAIProcessing, nextOp, nextStage;
 
     @FXML
     ListView criteriaListView, alternativeListView, marks;
 
     @FXML
-    Label problem, rightOp, leftOp, consistency;
+    Label problem, rightOp, leftOp, consistency, subCrit;
 
     @FXML
     GridPane workTable;
 
+//    @FXML
+    Pane subPanel;
+
     DataContainer dataContainer;
 
+    Stage stage;
     ObservableList criteriasArray = FXCollections.observableArrayList();
     ObservableList alternativesArray = FXCollections.observableArrayList();
     ObservableList marksArray = FXCollections.observableArrayList();
 
     DataProcessing maiProcess;
     private boolean swap;
+    private Scene scene;
 
     public void initialize(java.net.URL location,
                            java.util.ResourceBundle resources) {
 
-        logger.trace("Controller initialized");
-        dataContainer = new DataContainer();
-        maiProcess = new DataProcessing(dataContainer, workTable, leftOp, rightOp, consistency);
-
-        ServerGetter getter = new ServerGetter();
-        try {
-            getter.getProblem(dataContainer);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
-        initStartData();
     }
 
     public void restartButtonClick(){
@@ -84,6 +80,7 @@ public class ExpertController implements Initializable {
         alternativeListView.setItems(alternativesArray);
         marks.setItems(marksArray);
 
+        nextStage.setDisable(true);
         problem.setText(problem.getText() + dataContainer.getProblem());
     }
 
@@ -105,17 +102,54 @@ public class ExpertController implements Initializable {
         logger.trace("MAI processing started");
         marks.getSelectionModel().select(0);
         maiProcess.startProcess(dataContainer.getMnemonicCriterias(),"criteria");
+        nextStage.setDisable(true);
     }
 
     public void nextOpClicked(){
 
-        if (maiProcess.updateTable(marks.getSelectionModel().getSelectedIndex()+1,swap))   {
+        if (maiProcess.updateTable(marks.getSelectionModel().getSelectedIndex()+1, swap))   {
 
           //  JOptionPane.showMessageDialog(null, "Вся таблица заполнена!");
             nextOp.setDisable(true);
+            nextStage.setDisable(false);
         }
         swap = false;
-
     }
 
+    public void nextStageClicked(){
+        subPanel.setVisible(true);
+        nextOp.setDisable(false);
+        subPanel.setVisible(true);
+        if (!maiProcess.startProcess(dataContainer.getMnemonicAlternatives(),"alternative")){
+
+         //   JOptionPane.showMessageDialog(null, "Все альтернативы проанализированы!");
+//            marks.getSelectionModel().select(0);
+//            ResultPriorityFinder finder = new ResultPriorityFinder(resultPriority, currentData, bestAlternative);
+//            finder.produceResultPriority();
+            nextOp.setDisable(true);
+        }
+    }
+
+    public void init(){
+
+        logger.trace("Controller initialized");
+        dataContainer = new DataContainer();
+        maiProcess = new DataProcessing(dataContainer, scene);//workTable, leftOp, rightOp, consistency, subCrit);
+
+        ServerGetter getter = new ServerGetter();
+        try {
+            getter.getProblem(dataContainer);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        subPanel = (Pane) scene.lookup("#subPanel");
+        subPanel.setVisible(false);
+
+        initStartData();
+    }
+
+    public void setScene(Scene scene) {
+        this.scene = scene;
+    }
 }
