@@ -9,6 +9,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.control.TabPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
@@ -48,6 +49,9 @@ public class ExpertController implements Initializable {
 
 //    @FXML
     Pane subPanel;
+
+    @FXML
+    TabPane tabsPane;
 
     DataContainer dataContainer;
 
@@ -122,10 +126,10 @@ public class ExpertController implements Initializable {
         subPanel.setVisible(true);
         if (!maiProcess.startProcess(dataContainer.getMnemonicAlternatives(),"alternative")){
 
-         //   JOptionPane.showMessageDialog(null, "Все альтернативы проанализированы!");
-//            marks.getSelectionModel().select(0);
-//            ResultPriorityFinder finder = new ResultPriorityFinder(resultPriority, currentData, bestAlternative);
-//            finder.produceResultPriority();
+          //  JOptionPane.showMessageDialog(null, "Все альтернативы проанализированы!");
+            tabsPane.getSelectionModel().select(1);
+            ResultPriorityFinder finder = new ResultPriorityFinder(dataContainer, scene);
+            finder.produceResultPriority();
             nextOp.setDisable(true);
         }
     }

@@ -53,6 +53,7 @@ public class DataContainer {
     }
 
     public ArrayList<String> getAlternatives() {
+
         return alternatives;
     }
 
