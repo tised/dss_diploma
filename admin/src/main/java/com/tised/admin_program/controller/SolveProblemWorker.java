@@ -64,7 +64,7 @@ public class SolveProblemWorker {
                     public void handle(MouseEvent event) {
                         logger.debug("clicked show current problem with id === " + getCurrentProblemButton.getId());
                         currentProblemPane.getChildren().clear();
-                        currentProblemPane.setGridLinesVisible(true);
+
                         JSONArray curProblemArray = getter.downloadCurProblem(getCurrentProblemButton.getId());
 
                         int row = 0;
@@ -77,6 +77,7 @@ public class SolveProblemWorker {
                             }
                             row++;
                         }
+                        currentProblemPane.setGridLinesVisible(true);
                     }
                 });
                 problemsFromServerPane.add(getCurrentProblemButton, 2, i + 1);

@@ -123,7 +123,8 @@ public class ExpertController implements Initializable {
     public void nextStageClicked(){
         subPanel.setVisible(true);
         nextOp.setDisable(false);
-        subPanel.setVisible(true);
+        nextStage.setDisable(true);
+
         if (!maiProcess.startProcess(dataContainer.getMnemonicAlternatives(),"alternative")){
 
           //  JOptionPane.showMessageDialog(null, "Все альтернативы проанализированы!");

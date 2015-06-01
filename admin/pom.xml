@@ -33,7 +33,7 @@
                 <artifactId>javafx-maven-plugin</artifactId>
                 <version>8.1.2</version>
                 <configuration>
-                    <mainClass>com.tised.admin_program.com.tised.expert.Main</mainClass>
+                    <mainClass>com.tised.admin_program.Main</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -41,7 +41,7 @@
                 <configuration>
                     <archive>
                         <manifest>
-                            <mainClass>com.tised.admin_program.com.tised.expert.Main</mainClass>
+                            <mainClass>com.tised.admin_program.Main</mainClass>
                         </manifest>
                     </archive>
                     <descriptorRefs>

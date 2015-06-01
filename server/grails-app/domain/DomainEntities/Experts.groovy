@@ -1,23 +1,26 @@
-package DSS
+package DomainEntities
 
-class ExpertResults {
+class Experts {
 
 	    static mapping = {
-        table 'expert_results'
+        table 'experts'
         // version is set to false, because this isn't available by default for legacy databases
         version false
         id generator:'identity', column:'id'
     }
 
     Integer id
-    Integer idExpert
-    String result_vector
-    Integer idProblem
+    String nameExpert
+    String surName
+    String email
+    String password
+
 
     static constraints = {
         id(max: 2147483647)
-        idExpert(max: 2147483647)
-        result_vector(size: 0..65535)
-        idProblem(max: 2147483647)
+        nameExpert(size: 0..50)
+        surName(size: 0..50)
+        password(size: 0..32)
+
     }
 }

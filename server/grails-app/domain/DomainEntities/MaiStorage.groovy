@@ -1,4 +1,4 @@
-package DSS
+package DomainEntities
 
 class MaiStorage {
 
@@ -14,6 +14,7 @@ class MaiStorage {
     String criterias
     String alternatives
     Integer idUser
+    Boolean isClosed
 
     static constraints = {
 
@@ -22,5 +23,6 @@ class MaiStorage {
         criterias(size: 0..65535)
         alternatives(size: 0..65535)
         idUser(max: 2147483647)
+        isClosed()
     }
 }

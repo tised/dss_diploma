@@ -4,8 +4,7 @@ import com.tised.expert.model.DataContainer;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.layout.GridPane;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.text.Text;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -46,12 +45,34 @@ public class DataProcessing {
 
         workTable.getChildren().clear();
 
+
         if (valOfAlternatives == data.getMnemonicCriterias().size())
             return false;
 
         subR = 0; subC = 1;
 
         sizeOfArr=arr.size()+1;
+
+        ColumnConstraints cc = new ColumnConstraints();
+        cc.setPercentWidth(100/sizeOfArr);
+        cc.setFillWidth(true);
+        cc.setHgrow(Priority.ALWAYS);
+
+        for (int i = 0; i < sizeOfArr; i++) {
+
+            workTable.getColumnConstraints().add(cc);
+        }
+
+        RowConstraints rc = new RowConstraints();
+        rc.setFillHeight(true);
+        rc.setVgrow(Priority.ALWAYS);
+
+        for (int i = 0; i < sizeOfArr; i++) {
+
+            workTable.getRowConstraints().add(rc);
+        }
+
+        workTable.setGridLinesVisible(true);
 
         for (int i = 0 ; i < sizeOfArr-1; i++){
 

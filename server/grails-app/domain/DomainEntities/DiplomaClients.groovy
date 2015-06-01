@@ -1,4 +1,4 @@
-package DSS
+package DomainEntities
 
 class DiplomaClients {
 	

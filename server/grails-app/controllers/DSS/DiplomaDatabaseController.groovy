@@ -1,17 +1,12 @@
 package DSS
 
+import DomainEntities.ExpertResults
+import DomainEntities.Experts
+import DomainEntities.MaiStorage
 import org.apache.commons.codec.digest.DigestUtils
 import org.apache.commons.lang.RandomStringUtils
 import org.codehaus.groovy.grails.web.json.JSONArray
 import org.codehaus.groovy.grails.web.json.JSONObject
-
-import javax.mail.Message
-import javax.mail.MessagingException
-import javax.mail.Session
-import javax.mail.Transport
-import javax.mail.internet.AddressException
-import javax.mail.internet.InternetAddress
-import javax.mail.internet.MimeMessage
 
 class DiplomaDatabaseController {
 

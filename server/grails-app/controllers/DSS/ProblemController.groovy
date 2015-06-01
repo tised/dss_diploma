@@ -1,7 +1,8 @@
 package DSS
 
+import DomainEntities.ExpertResults
+import DomainEntities.MaiStorage
 import org.codehaus.groovy.grails.web.json.JSONArray
-import org.codehaus.groovy.grails.web.json.JSONObject
 
 class ProblemController {
 
@@ -22,6 +23,7 @@ class ProblemController {
         newMaiProblem.setCriterias(newProblem.get(1).toString())
         newMaiProblem.setAlternatives(newProblem.get(2).toString())
         newMaiProblem.setIdUser(Integer.valueOf(params.id_user))
+        newMaiProblem.setIsClosed(false)
 
         newMaiProblem.save(flush: true)
 
@@ -55,8 +57,6 @@ class ProblemController {
 
         StringBuilder sb = new StringBuilder(priority_vector)
 
-        sb.deleteCharAt(0)
-        sb.deleteCharAt(sb.size()-1)
         String res =  sb.toString();
 
         result.setIdExpert(Integer.valueOf(params.id_expert))
