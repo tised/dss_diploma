@@ -49,21 +49,25 @@ public class ServerGetter {
 
                 JSONArray arr = new JSONArray(recievedProblem.get(1).toString());
                 ArrayList<String> list = new ArrayList<String>();
-
+                ArrayList<String> mList = new ArrayList<String>();
                 for(int i = 0; i < arr.length(); i++){
-                    list.add(arr.get(i).toString());
+                    list.add(arr.get(i).toString()+"(A"+i+")");
+                    mList.add("A"+i);
                 }
                 data.setAlternatives(list);
-
+                data.setMnemonicAlternatives(mList);
 
                 arr = recievedProblem.getJSONArray(2);//new org.json.JSONArray(recievedProblem.get(2).toString());
+
                 list = new ArrayList<String>();
-
+                mList = new ArrayList<String>();
                 for(int i = 0; i < arr.length(); i++){
-                    list.add(arr.get(i).toString());
+                    list.add(arr.get(i).toString()+"(C"+i+")");
+                    mList.add("C"+i);
                 }
-                data.setCriterias(list);
 
+                data.setCriterias(list);
+                data.setMnemonicCriterias(mList);
 
             } catch (JSONException ex) {
                 logger.error(ex);

@@ -8,6 +8,7 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.GridPane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
@@ -20,25 +21,43 @@ public class ExpertController implements Initializable {
 
     final static Logger logger = LogManager.getLogger(ExpertController.class);
 
-    @FXML
-    Button restartButton, startMAIProcessing;
+    String[] marksStringArray = {"Равная важность",
+            "Среднее",
+            "Умеренное превосходство",
+            "Среднее",
+            "Существенное или сильное превосходство",
+            "Среднее",
+            "Значительное превосходство",
+            "Среднее",
+            "Очень большое превосходство"};
 
     @FXML
-    ListView criteriaListView, alternativeListView;
+    Button restartButton, startMAIProcessing, nextOp;
 
     @FXML
-    Label problem;
+    ListView criteriaListView, alternativeListView, marks;
+
+    @FXML
+    Label problem, rightOp, leftOp, consistency;
+
+    @FXML
+    GridPane workTable;
 
     DataContainer dataContainer;
 
     ObservableList criteriasArray = FXCollections.observableArrayList();
     ObservableList alternativesArray = FXCollections.observableArrayList();
+    ObservableList marksArray = FXCollections.observableArrayList();
+
+    DataProcessing maiProcess;
+    private boolean swap;
 
     public void initialize(java.net.URL location,
                            java.util.ResourceBundle resources) {
 
         logger.trace("Controller initialized");
         dataContainer = new DataContainer();
+        maiProcess = new DataProcessing(dataContainer, workTable, leftOp, rightOp, consistency);
 
         ServerGetter getter = new ServerGetter();
         try {
@@ -59,17 +78,43 @@ public class ExpertController implements Initializable {
 
         criteriasArray.addAll(dataContainer.getCriterias());
         alternativesArray.addAll(dataContainer.getAlternatives());
+        marksArray.addAll(marksStringArray);
 
         criteriaListView.setItems(criteriasArray);
         alternativeListView.setItems(alternativesArray);
+        marks.setItems(marksArray);
 
         problem.setText(problem.getText() + dataContainer.getProblem());
+    }
+
+    public void swapButtonClicked(){
+
+        logger.trace("swap clicked");
+        String tmp = "";
+        tmp = leftOp.getText();
+        leftOp.setText(rightOp.getText());
+        rightOp.setText(tmp);
+        if (!swap)
+            swap = true;
+        else
+            swap = false;
     }
 
     public void startMAIProcessingClicked(){
 
         logger.trace("MAI processing started");
+        marks.getSelectionModel().select(0);
+        maiProcess.startProcess(dataContainer.getMnemonicCriterias(),"criteria");
+    }
 
+    public void nextOpClicked(){
+
+        if (maiProcess.updateTable(marks.getSelectionModel().getSelectedIndex()+1,swap))   {
+
+          //  JOptionPane.showMessageDialog(null, "Вся таблица заполнена!");
+            nextOp.setDisable(true);
+        }
+        swap = false;
 
     }
 
