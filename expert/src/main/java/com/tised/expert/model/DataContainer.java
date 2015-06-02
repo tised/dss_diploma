@@ -12,6 +12,25 @@ public class DataContainer {
     private float[][] calculatedCriterias;
     private double[][] calculatedPrioritys;
 
+    public int getIdExpert() {
+        return idExpert;
+    }
+
+    public void setIdExpert(int idExpert) {
+        this.idExpert = idExpert;
+    }
+
+    private int idExpert;
+    private int problemID;
+
+    public int getProblemID() {
+        return problemID;
+    }
+
+    public void setProblemID(int problemID) {
+        this.problemID = problemID;
+    }
+
     public double[][] getCalculatedPrioritys() {
         return calculatedPrioritys;
     }

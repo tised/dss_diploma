@@ -7,6 +7,7 @@ import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.mime.MultipartEntity;
+import org.apache.http.entity.mime.content.StringBody;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
@@ -32,6 +33,7 @@ public class ServerGetter {
 
 
         MultipartEntity entity = new MultipartEntity();
+        entity.addPart("id_expert", new StringBody("1"));
         post.setEntity(entity);
 
         HttpResponse response = client.execute(post);
@@ -58,7 +60,7 @@ public class ServerGetter {
                 data.setMnemonicAlternatives(mList);
 
                 arr = recievedProblem.getJSONArray(2);//new org.json.JSONArray(recievedProblem.get(2).toString());
-
+                data.setProblemID(Integer.valueOf(recievedProblem.get(3).toString()));
                 list = new ArrayList<String>();
                 mList = new ArrayList<String>();
                 for(int i = 0; i < arr.length(); i++){

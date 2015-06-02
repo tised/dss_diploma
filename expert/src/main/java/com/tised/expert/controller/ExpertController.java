@@ -68,7 +68,8 @@ public class ExpertController implements Initializable {
     public void initialize(java.net.URL location,
                            java.util.ResourceBundle resources) {
 
-        AllertHandler.showLogin();
+        dataContainer = new DataContainer();
+        AllertHandler.showLogin(dataContainer);
     }
 
     public void restartButtonClick(){
@@ -140,7 +141,7 @@ public class ExpertController implements Initializable {
     public void init(){
 
         logger.trace("Controller initialized");
-        dataContainer = new DataContainer();
+
         maiProcess = new DataProcessing(dataContainer, scene);//workTable, leftOp, rightOp, consistency, subCrit);
 
         ServerGetter getter = new ServerGetter();

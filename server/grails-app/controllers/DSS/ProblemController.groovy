@@ -2,6 +2,7 @@ package DSS
 
 import DomainEntities.ExpertResults
 import DomainEntities.MaiStorage
+import DomainEntities.ReadyProblems
 import org.codehaus.groovy.grails.web.json.JSONArray
 
 import java.text.DecimalFormat
@@ -34,13 +35,23 @@ class ProblemController {
 
     def getProblem(){
 
-        def problem = MaiStorage.get(MaiStorage.last().id)
 
+        def allProblems = MaiStorage.getAll()
+        int id = 0;
+
+        for (MaiStorage curProb : allProblems){
+            if (ReadyProblems.findByIdProblemAndIdExpert(curProb.getId(),params.id_expert,null) == null){
+                id = curProb.getId();
+                break;
+            }
+        }
+
+        def problem = MaiStorage.get(id)
         JSONArray answer = new JSONArray()
         answer.put(problem.problem)
         answer.put(new JSONArray(problem.alternatives))
         answer.put(new JSONArray(problem.criterias))
-
+        answer.put(problem.id)
         render(contentType: "application/json") {
             answer
         }
@@ -63,9 +74,13 @@ class ProblemController {
 
         result.setIdExpert(Integer.valueOf(params.id_expert))
         result.setResult_vector(res)
-        //result.setIdProblem(Integer.valueOf(params.id_problem))
-        result.setIdProblem(1)
+        result.setIdProblem(Integer.valueOf(params.id_problem))
         result.save(flush: true)
+
+        ReadyProblems rdy = new ReadyProblems()
+        rdy.setIdExpert(Integer.valueOf(params.id_expert))
+        rdy.setIdProblem(Integer.valueOf(params.id_problem))
+        rdy.save(flush: true)
 
         render "saved result"
     }
@@ -155,7 +170,7 @@ class ProblemController {
 
         println startArray
 
-        //startArray = [[5, 3.5, 1, 3.5, 2], [4, 5, 2, 3, 1],[ 5, 4, 1, 3, 2,], [5, 3.5, 1.5, 3.5, 1.5], [5, 4, 1, 3, 2],[4.5, 4.5, 2, 3, 1]] as double[][];
+        //startArray = [[5, 3.5, 1, 3.5, 2], [4, 5, 2, 3, 1],[ 5, 4, 1, 3, 2], [5, 3.5, 1.5, 3.5, 1.5], [5, 4, 1, 3, 2],[4.5, 4.5, 2, 3, 1]] as double[][];
         println "start array is === " + startArray
 
         int cols = startArray[0].size(), rows = startArray.length;
@@ -215,7 +230,7 @@ class ProblemController {
 //
 //    }
 
-    def int calcKemeni(double[][] arr){
+    private int calcKemeni(double[][] arr){
 
         def pairsArr = arr;
 

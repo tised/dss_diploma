@@ -1,6 +1,7 @@
 package com.tised.expert.support;
 
 import com.tised.expert.controller.ServerSetter;
+import com.tised.expert.model.DataContainer;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -21,7 +22,7 @@ public class AllertHandler {
 
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(ServerSetter.class);
 
-    public static void showLogin(){
+    public static void showLogin(DataContainer data){
 
         Dialog<Pair<String, String>> dialog = new Dialog<>();
         dialog.setTitle("");
