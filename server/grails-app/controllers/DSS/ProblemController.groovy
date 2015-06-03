@@ -3,20 +3,23 @@ package DSS
 import DomainEntities.ExpertResults
 import DomainEntities.MaiStorage
 import DomainEntities.ReadyProblems
+import org.apache.commons.logging.LogFactory
 import org.codehaus.groovy.grails.web.json.JSONArray
 
 import java.text.DecimalFormat
 
 class ProblemController {
 
-    def index() {
+    private static final log = LogFactory.getLog(ProblemController.class)
 
+    def index() {
+    log.info("tofile")
         render "we here";
     }
 
     def saveProblem(){
 
-        println "SAVE PROBLEM PARAMS === " + params
+        log.info "SAVE PROBLEM PARAMS === " + params
         //  def problem = new JSONObject(params.problem)
         MaiStorage newMaiProblem = new MaiStorage()
 
@@ -94,7 +97,7 @@ class ProblemController {
 
         int cols = toUnleashMatrix[0].size(), rows = toUnleashMatrix.length;
 
-        println "rows == " + rows
+        log.info "rows == " + rows
 
         float[][] unleashedArray = new float[rows][cols];
 
@@ -110,7 +113,7 @@ class ProblemController {
                     def tmp1 = sortedSubArray.findIndexValues{it == subArray[j]}.collect{it + 1}
                     def tmp2 = subArray.findIndexValues{it == subArray[j]}
                     for (int k = 0; k < sortedSubArray.findAll{it == subArray[j]}.size(); k++)    {
-                       // println "new == " + tmp2[k]
+                       // log.info "new == " + tmp2[k]
                         unleashedArray[i][Integer.valueOf(tmp2[k].intValue())] = tmp1.sum()/sortedSubArray.findAll{it == subArray[j]}.size();
 
                     }
@@ -127,7 +130,7 @@ class ProblemController {
 
     def kemeni(){
 
-        println "KEMENI PARAMS === " + params
+        log.info "KEMENI PARAMS === " + params
 
 //        def startArray = [
 //                [1, 2, 2, 6, 3, 3, 4, 7, 1, 2, 5],
@@ -160,7 +163,7 @@ class ProblemController {
             for (int i = 0; i < arr.length(); i++){
                 sub[i] = precision(Double.valueOf(arr.get(i)) * 8 + 1, 0);
             }
-            println sub
+            log.info sub
 
             startArray.add(sub)
         }
@@ -168,13 +171,13 @@ class ProblemController {
 
         startArray = unleashMatrix(startArray as float[][])
 
-        println startArray
+        log.info startArray
 
         //startArray = [[5, 3.5, 1, 3.5, 2], [4, 5, 2, 3, 1],[ 5, 4, 1, 3, 2], [5, 3.5, 1.5, 3.5, 1.5], [5, 4, 1, 3, 2],[4.5, 4.5, 2, 3, 1]] as double[][];
-        println "start array is === " + startArray
+        log.info "start array is === " + startArray
 
         int cols = startArray[0].size(), rows = startArray.length;
-        // println "start cols == "+cols + " start rows == "+ rows
+        // log.info "start cols == "+cols + " start rows == "+ rows
 
         double[][] pairComp = new float[cols*rows][cols];
         int newRow = 0;
@@ -184,7 +187,7 @@ class ProblemController {
             for(int j = 0; j < cols; j++)
                 pairComp[i][j] = 0;
 
-        // println "cols == " + pairComp[0].size() + " " + " rows " +  pairComp.length;
+        // log.info "cols == " + pairComp[0].size() + " " + " rows " +  pairComp.length;
         for(int i =0; i <rows; i++){
 
             for(int j = 0; j < cols; j++){
@@ -193,7 +196,7 @@ class ProblemController {
 
                 for (int k = 0; k <cols; k++){
 
-                    // println "i == "+i+" j == "+j + "new row == " + newRow
+                    // log.info "i == "+i+" j == "+j + "new row == " + newRow
 
                     if (startArray[i][k] == tmp)
                         pairComp[newRow][k] = 0
@@ -209,7 +212,7 @@ class ProblemController {
             }
         }
 
-       // println pairComp
+       // log.info pairComp
        // calcKemeni(pairComp)
         render calcKemeni(pairComp)
     }
@@ -235,7 +238,7 @@ class ProblemController {
         def pairsArr = arr;
 
         int cols = arr[0].size(), rows = arr.length;
-        println "cols == "+cols + " rows == "+rows
+        log.info "cols == "+cols + " rows == "+rows
         int count = rows/cols;
         def matA = []
         def matB = []
@@ -269,7 +272,7 @@ class ProblemController {
             rowEndB = cols;
         }
 
-        println kennMat
+        log.info kennMat
 
         float[] sumArr = new float[count];
 
@@ -279,14 +282,14 @@ class ProblemController {
                 sumArr[i] += kennMat[j][i];
             }
         }
-        println "min == " + sumArr.collect().toList().findIndexOf {it == sumArr.collect().toList().min()}
+        log.info "min == " + sumArr.collect().toList().findIndexOf {it == sumArr.collect().toList().min()}
         return sumArr.collect().toList().findIndexOf {it == sumArr.collect().toList().min()}
     }
 
     def float processKem(def arr1, def arr2, int cols){
 
-        println "arr 1 == " + arr1
-        println "arr 2 == " + arr2
+        log.info "arr 1 == " + arr1
+        log.info "arr 2 == " + arr2
 
         float val = 0;
 
@@ -300,7 +303,7 @@ class ProblemController {
             }
         }
 
-        //println val
+        //log.info val
         return val;
     }
 }
