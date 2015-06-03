@@ -32,7 +32,6 @@ public class SolveProblemWorker {
 
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(SolveProblemWorker.class);
     private final Label result;
-    String[][] resultItemsArray;
     private DataContainer dataContainer;
     private GridPane problemsFromServerPane;//, currentProblemPane;
     private ServerGetter getter;
@@ -56,8 +55,8 @@ public class SolveProblemWorker {
         getter = new ServerGetter(dataContainer);
         getter.downloadProblems();
 
-        logger.debug("table == " + tableWithResults);
         problemsFromServerPane.getChildren().subList(2,problemsFromServerPane.getChildren().size()).clear();
+        tableWithResults.getColumns().clear();
 
         showAllProblems();
     }
@@ -90,6 +89,8 @@ public class SolveProblemWorker {
 
                 getCurrentProblemButton.setOnMouseClicked(event -> {
 
+                    tableWithResults.getColumns().clear();
+
                     logger.debug("clicked show current problem with id === " + getCurrentProblemButton.getId());
 
                     result.setId(getCurrentProblemButton.getId());
@@ -97,8 +98,8 @@ public class SolveProblemWorker {
                     JSONArray curProblemArray = getter.downloadCurProblem(getCurrentProblemButton.getId());
 
                     int row1 = 0;
-
-                    resultItemsArray = new String[curProblemArray.length()][((JSONObject)curProblemArray.get(0)).getJSONArray("res_vector").length()];
+                    logger.debug("len of array = " + curProblemArray.length() + " len of sub == " + ((JSONObject)curProblemArray.get(0)).getJSONArray("res_vector").length());
+                    String[][] resultItemsArray = new String[curProblemArray.length()][((JSONObject)curProblemArray.get(0)).getJSONArray("res_vector").length()];
 
                     for (Object curVector : curProblemArray) {
                         String[] elements = getStringArray(((JSONObject)curVector).getJSONArray("res_vector"));
@@ -108,7 +109,11 @@ public class SolveProblemWorker {
                     }
 
                     ObservableList<String[]> data = FXCollections.observableArrayList();
+
+                    data.clear();
                     data.addAll(Arrays.asList(resultItemsArray));
+
+                    logger.debug("Array for table === "  + data);
 
                     for (int i1 = 0; i1 < resultItemsArray[0].length; i1++) {
                         TableColumn tc = new TableColumn();
@@ -119,13 +124,13 @@ public class SolveProblemWorker {
                                 return new SimpleStringProperty((p.getValue()[colNo]));
                             }
                         });
+
                         tc.setPrefWidth(90);
 
                         tableWithResults.getColumns().add(tc);
                     }
 
                     tableWithResults.setItems(data);
-
                 });
 
                 problemsFromServerPane.add(getCurrentProblemButton, 2, i + 1);
