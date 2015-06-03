@@ -49,7 +49,7 @@ class ProblemController {
             }
         }
 
-        def problem = MaiStorage.get(id)
+        def problem = MaiStorage.get(25)
         JSONArray answer = new JSONArray()
         answer.put(problem.problem)
         answer.put(new JSONArray(problem.alternatives))
@@ -226,13 +226,6 @@ class ProblemController {
         return (double) tmp / factor;
     }
 
-//    private void fillStartArray(int id, ){
-//
-//        ExpertResults results = ExpertResults.get(id)
-//
-//
-//    }
-
     private int calcKemeni(double[][] arr){
 
         def pairsArr = arr;
@@ -272,8 +265,6 @@ class ProblemController {
             rowEndB = cols;
         }
 
-        log.info kennMat
-
         float[] sumArr = new float[count];
 
         for(int i = 0; i<count;i++){
@@ -282,6 +273,7 @@ class ProblemController {
                 sumArr[i] += kennMat[j][i];
             }
         }
+
         log.info "min == " + sumArr.collect().toList().findIndexOf {it == sumArr.collect().toList().min()}
         return sumArr.collect().toList().findIndexOf {it == sumArr.collect().toList().min()}
     }

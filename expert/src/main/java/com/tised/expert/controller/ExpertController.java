@@ -98,6 +98,7 @@ public class ExpertController implements Initializable {
         tmp = leftOp.getText();
         leftOp.setText(rightOp.getText());
         rightOp.setText(tmp);
+
         if (!swap)
             swap = true;
         else

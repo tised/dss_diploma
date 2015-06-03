@@ -43,6 +43,9 @@ public class RootLayoutController implements Initializable{
 	@FXML
 	GridPane problemsFromServer;
 
+	@FXML
+	TableView tableWithResults;
+
 	private AddProblemWorker problemWorker;
 	private SolveProblemWorker solveWorker;
 	private Scene scene;
@@ -114,8 +117,11 @@ public class RootLayoutController implements Initializable{
 	public void getResultButtonClick(){
 
 		ServerGetter getter = new ServerGetter();
+		int resID = getter.getResultFromProblem(resultAlternative.getId());
 
-		resultAlternative.setText("Результат: " + String.valueOf(getter.getResultFromProblem(resultAlternative.getId())));
+		((TableColumn)tableWithResults.getColumns().get(resID)).setStyle("-fx-border-color: green;");
+
+		resultAlternative.setText("Результат: " + String.valueOf(resID));
 	}
 	
 	public void customInit(){

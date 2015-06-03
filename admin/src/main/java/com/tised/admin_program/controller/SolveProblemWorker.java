@@ -140,7 +140,7 @@ public class SolveProblemWorker {
 
                         tc.setPrefWidth(90);
 
-                        tc.setStyle("-fx-border-color: black;");
+                        //tc.setStyle("-fx-border-color: black;");
                         tableWithResults.getColumns().add(tc);
                     }
 
