@@ -8,10 +8,7 @@ import javafx.collections.ObservableList;
 import javafx.event.EventHandler;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.util.Callback;
@@ -98,7 +95,7 @@ public class SolveProblemWorker {
                     JSONArray curProblemArray = getter.downloadCurProblem(getCurrentProblemButton.getId());
 
                     int row1 = 0;
-                    logger.debug("len of array = " + curProblemArray.length() + " len of sub == " + ((JSONObject)curProblemArray.get(0)).getJSONArray("res_vector").length());
+
                     String[][] resultItemsArray = new String[curProblemArray.length()][((JSONObject)curProblemArray.get(0)).getJSONArray("res_vector").length()];
 
                     for (Object curVector : curProblemArray) {
@@ -113,11 +110,27 @@ public class SolveProblemWorker {
                     data.clear();
                     data.addAll(Arrays.asList(resultItemsArray));
 
-                    logger.debug("Array for table === "  + data);
-
                     for (int i1 = 0; i1 < resultItemsArray[0].length; i1++) {
-                        TableColumn tc = new TableColumn();
+                        TableColumn tc = new TableColumn("A"+i1);
                         final int colNo = i1;
+
+                        tc.setCellFactory(new Callback<TableColumn<String[], String>, TableCell<String[], String>>() {
+                            @Override
+                            public TableCell<String[], String> call(TableColumn<String[], String> p) {
+                                TableCell<String[], String> tableCell = new TableCell<String[], String> (){
+                                    @Override
+                                    public void updateItem(String item, boolean empty) {
+                                        if (item != null){
+                                            setText(item);
+                                        }
+                                    }
+                                };
+                                tableCell.setAlignment(Pos.CENTER);
+                                return tableCell;
+                            }
+                        });
+
+
                         tc.setCellValueFactory(new Callback<TableColumn.CellDataFeatures<String[], String>, ObservableValue<String>>() {
                             @Override
                             public ObservableValue<String> call(TableColumn.CellDataFeatures<String[], String> p) {
@@ -127,8 +140,12 @@ public class SolveProblemWorker {
 
                         tc.setPrefWidth(90);
 
+                        tc.setStyle("-fx-border-color: black;");
                         tableWithResults.getColumns().add(tc);
                     }
+
+                        tableWithResults.getSelectionModel().select(3);//.setStyle("-fx-border-color: green;");
+
 
                     tableWithResults.setItems(data);
                 });
