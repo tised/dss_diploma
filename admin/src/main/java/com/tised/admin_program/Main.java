@@ -42,6 +42,10 @@ public class Main extends Application {
             primaryStage.setScene(scene);
             primaryStage.show();
 
+            RootLayoutController controller = (RootLayoutController) loader.getController();
+            controller.setScene(scene);
+            controller.customInit();
+
             logger.trace("Application started");
 
         } catch (IOException e) {

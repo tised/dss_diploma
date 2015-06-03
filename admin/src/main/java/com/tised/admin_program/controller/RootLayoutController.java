@@ -6,6 +6,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -40,42 +41,17 @@ public class RootLayoutController implements Initializable{
 	Tab addProblemTab, solveProblemTab;
 
 	@FXML
-	GridPane problemsFromServer, currentProblemFromServer;
+	GridPane problemsFromServer;
 
 	private AddProblemWorker problemWorker;
 	private SolveProblemWorker solveWorker;
+	private Scene scene;
 
 	public void initialize(java.net.URL location,
             java.util.ResourceBundle resources){
 
-		dataContainer = new DataContainer();
-		addInfoProblemPanel.setDisable(true);
-
-		problemWorker = new AddProblemWorker(criteriasList, alternativesList, dataContainer);
-		solveWorker = new SolveProblemWorker(dataContainer, problemsFromServer, currentProblemFromServer, resultAlternative);
-
-		tabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
-
-			@Override
-			public void changed(ObservableValue<? extends Tab> arg0,
-								Tab arg1, Tab arg2) {
-
-				if(arg2 == solveProblemTab) {
-					logger.debug("solve problem tab chosed");
-
-					solveWorker.init();
-				}
-
-				if(arg2 == addProblemTab) {
-					logger.debug("add problem tab chosed");
-
-
-				}
-			}
-		});
-
 		AllertHandler.showLogin();
-	}
+		}
 	
 	@FXML
 	public void startFillData(){
@@ -140,6 +116,41 @@ public class RootLayoutController implements Initializable{
 		ServerGetter getter = new ServerGetter();
 
 		resultAlternative.setText("Результат: " + String.valueOf(getter.getResultFromProblem(resultAlternative.getId())));
+	}
+	
+	public void customInit(){
+
+		dataContainer = new DataContainer();
+		addInfoProblemPanel.setDisable(true);
+
+		problemWorker = new AddProblemWorker(criteriasList, alternativesList, dataContainer);
+		solveWorker = new SolveProblemWorker(scene, dataContainer, problemsFromServer, resultAlternative);
+
+		tabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
+
+			@Override
+			public void changed(ObservableValue<? extends Tab> arg0,
+								Tab arg1, Tab arg2) {
+
+				if(arg2 == solveProblemTab) {
+					logger.debug("solve problem tab chosed");
+
+					solveWorker.init();
+				}
+
+				if(arg2 == addProblemTab) {
+					logger.debug("add problem tab chosed");
+
+
+				}
+			}
+		});
+
+	}
+
+	public void setScene(Scene scene){
+
+		this.scene = scene;
 	}
 
 }
