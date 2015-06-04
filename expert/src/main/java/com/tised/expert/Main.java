@@ -27,7 +27,7 @@ public class Main extends Application {
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("Expert");
         this.primaryStage.setResizable(false);
-
+        setUserAgentStylesheet(STYLESHEET_CASPIAN);
         initRootLayout();
     }
 
@@ -41,6 +41,7 @@ public class Main extends Application {
             rootLayout = (AnchorPane) loader.load(getClass().getResourceAsStream(fxmlFile));
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
+           // scene.getStylesheets().add("http://www.jpedal.org/simon/dynamiccss/webcss.css");
             primaryStage.setScene(scene);
             primaryStage.show();
             ExpertController controller = (ExpertController) loader.getController();

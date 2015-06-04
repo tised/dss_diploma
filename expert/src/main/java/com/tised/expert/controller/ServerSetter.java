@@ -12,6 +12,7 @@ import org.apache.http.util.EntityUtils;
 import org.apache.logging.log4j.LogManager;
 import org.codehaus.groovy.grails.web.json.JSONArray;
 import org.codehaus.groovy.grails.web.json.JSONException;
+import org.codehaus.groovy.grails.web.json.JSONObject;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
@@ -26,8 +27,9 @@ public class ServerSetter {
 
     public ServerSetter(){}
 
-    public String checkLogin(String email, String password){
-        String result = "";
+    public JSONObject checkLogin(String email, String password){
+        JSONObject result = new JSONObject();
+
         try {
             HttpClient client = new DefaultHttpClient();
             HttpPost post = new HttpPost(Addresses.checkLogin);
@@ -45,7 +47,7 @@ public class ServerSetter {
             if (resEntity != null) {
                 String answer = EntityUtils.toString(resEntity);
                 logger.debug("server answer: " + answer);
-                result = answer;
+                result = new JSONObject(answer);
             }
             if (resEntity != null) {
                 resEntity.consumeContent();

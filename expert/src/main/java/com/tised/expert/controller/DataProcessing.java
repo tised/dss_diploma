@@ -28,6 +28,8 @@ public class DataProcessing {
     String dir = "..\\expert\\", nameOfFile = dir + "C.txt";
     Scene scene;
 
+    int prefWidth = 50;
+
     public DataProcessing(DataContainer data, Scene s){
 
         this.data = data;
@@ -76,17 +78,23 @@ public class DataProcessing {
 
         for (int i = 0 ; i < sizeOfArr-1; i++){
 
-            Text l1 = new Text(arr.get(i));
+            Label l1 = new Label(arr.get(i));
+            l1.setStyle("-fx-border-color: black;");
+            l1.setPrefWidth(prefWidth);
             workTable.add(l1, i+1, 0);
 
-            Text l2 = new Text(arr.get(i));
+            Label l2 = new Label(arr.get(i));
+            l2.setStyle("-fx-border-color: black;");
+            l2.setPrefWidth(prefWidth);
             workTable.add(l2, 0, i+1);
         }
 
         for (int i = 1; i < sizeOfArr; i++)
             for(int j = 1; j < sizeOfArr; j++)
                 if (i == j) {
-                    Text l1 = new Text("1");
+                    Label l1 = new Label("1");
+                    l1.setStyle("-fx-border-color: black;");
+                    l1.setPrefWidth(prefWidth);
                     workTable.add(l1, i, j);
                 }
 
@@ -117,14 +125,22 @@ public class DataProcessing {
         //лейблам, иначе - увеличиваем номер столбца
         if (subC != subR){
 
+            Label t1 = new Label(String.valueOf(val));
+            t1.setPrefWidth(prefWidth);
+            t1.setStyle("-fx-border-color: black;");
+            Label t2 = new Label(String.valueOf(precision((float) 1 / val)));
+            t2.setPrefWidth(prefWidth);
+            t2.setStyle("-fx-border-color: black;");
+
             if(swap){
-                workTable.add(new Text(String.valueOf(val)), subR + 1, subC + 1);
-                workTable.add(new Text(String.valueOf(precision((float) 1 / val))), subC + 1, subR + 1);
+                workTable.add(t1, subR + 1, subC + 1);
+                workTable.add(t2, subC + 1, subR + 1);
             }
             else{
-                workTable.add(new Text(String.valueOf(val)), subC + 1, subR + 1);
-                workTable.add(new Text(String.valueOf(precision((float) 1 / val))), subR + 1, subC + 1);
+                workTable.add(t1, subC + 1, subR + 1);
+                workTable.add(t2, subR + 1, subC + 1);
             }
+
             subC++;
 
             //если вышли за границы массива, обновляем номер строки и столбца
@@ -173,7 +189,7 @@ public class DataProcessing {
             logger.debug(i + " row");
             for (int j = 1; j < c; j++){
 
-                subCalc[i-1][j-1] = Float.valueOf(((Text) getNodeFromGridPane(workTable, j, i)).getText());
+                subCalc[i-1][j-1] = Float.valueOf(((Label) getNodeFromGridPane(workTable, j, i)).getText());
                 logger.debug(subCalc[i-1][j-1] + " ");
             }
         }

@@ -3,6 +3,8 @@ package com.tised.expert.controller;
 import com.tised.expert.model.DataContainer;
 import com.tised.expert.support.Addresses;
 import groovy.json.internal.ArrayUtils;
+import javafx.geometry.HPos;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
@@ -78,6 +80,7 @@ public class ResultPriorityFinder {
         logger.debug("grid r == "  + workTable.getRowConstraints().size() + " c == " + workTable.getColumnConstraints().size());
 
         workTable.add(new Label("Результат: "), workTable.getColumnConstraints().size() - 1, 0);
+        workTable.add(new Label("Альтернативы: "), 0, 0);
 
         for (int i = 1; i < workTable.getRowConstraints().size() - 1; i++){
 
@@ -114,6 +117,11 @@ public class ResultPriorityFinder {
                 }
             }
 
+        }
+
+        for (int i = 0; i<workTable.getChildren().size(); i++){
+
+            GridPane.setHalignment(workTable.getChildren().get(i), HPos.CENTER);
         }
 
         calculateResultMAI();
@@ -165,7 +173,7 @@ public class ResultPriorityFinder {
         MultipartEntity entity = new MultipartEntity();
 
         entity.addPart("alternative_priority", new StringBody(mJSONArray.toString()));
-        entity.addPart("id_expert", new StringBody("1"));
+        entity.addPart("id_expert", new StringBody(String.valueOf(data.getIdExpert())));
         entity.addPart("id_problem", new StringBody(String.valueOf(data.getProblemID())));
         post.setEntity(entity);
 

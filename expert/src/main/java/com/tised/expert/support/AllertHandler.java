@@ -12,6 +12,7 @@ import javafx.scene.layout.GridPane;
 import javafx.util.Pair;
 import org.apache.commons.codec.digest.DigestUtils;
 import org.apache.logging.log4j.LogManager;
+import org.codehaus.groovy.grails.web.json.JSONObject;
 
 import java.util.Optional;
 
@@ -53,6 +54,7 @@ public class AllertHandler {
 // Enable/Disable login button depending on whether a username was entered.
         Node loginButton = dialog.getDialogPane().lookupButton(loginButtonType);
         Node cancelButton = dialog.getDialogPane().lookupButton(cancelButtonType);
+        final JSONObject[] serverAnswer = {null};
         loginButton.setDisable(true);
         cancelButton.setOnMouseClicked(new EventHandler<MouseEvent>() {
             @Override
@@ -62,22 +64,22 @@ public class AllertHandler {
                 System.exit(0);
             }
         });
-// Do some validation (using the Java 8 lambda syntax).
+        // Do some validation (using the Java 8 lambda syntax).
         login.textProperty().addListener((observable, oldValue, newValue) -> {
             loginButton.setDisable(newValue.trim().isEmpty());
         });
 
         dialog.getDialogPane().setContent(grid);
 
-// Request focus on the username field by default.
+        // Request focus on the username field by default.
         Platform.runLater(() -> login.requestFocus());
 
-// Convert the result to a username-password-pair when the login button is clicked.
+        // Convert the result to a username-password-pair when the login button is clicked.
         dialog.setResultConverter(dialogButton -> {
             if (dialogButton == loginButtonType) {
                 logger.debug("login == " + login.getText() + " pass === " + toMd5(password.getText()));
-                String res = serverSetter.checkLogin(login.getText(), toMd5(password.getText()));
-                return new Pair<>("result", res);
+                serverAnswer[0] = serverSetter.checkLogin(login.getText(), toMd5(password.getText()));
+                return new Pair<>("result", serverAnswer[0].getString("result_mes"));
             }
             return null;
         });
@@ -87,9 +89,15 @@ public class AllertHandler {
         result.ifPresent(usernamePassword -> {
 
             if(!usernamePassword.getValue().equals("OK")){
-
+                logger.debug("id expert is == " + serverAnswer[0].getInt("id_expert"));
                 logger.debug(usernamePassword.getKey() + " === " + usernamePassword.getValue());
                 dialog.showAndWait();
+            }
+            else{
+                logger.debug("id expert is == " + serverAnswer[0].getInt("id_expert"));
+                logger.debug(usernamePassword.getKey() + " === " + usernamePassword.getValue());
+                data.setIdExpert(serverAnswer[0].getInt("id_expert"));
+
             }
 
         });

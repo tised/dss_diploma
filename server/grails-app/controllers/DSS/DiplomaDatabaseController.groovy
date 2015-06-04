@@ -47,14 +47,24 @@ class DiplomaDatabaseController {
 
         def experts = Experts.getAll()
         String result = "NEOK";
+        int id = -1;
         for (Experts expert : experts){
 
             if (expert.getEmail().equals(params.email) &&
-                     expert.getPassword().equals(params.password))
-                result = "OK" //new JSONObject(expert.toString())
+                     expert.getPassword().equals(params.password)) {
+                result = "OK"
+                id = expert.getId()
+            }
         }
 
-        render result
+        JSONObject answer = new JSONObject()
+        answer.put("result_mes",result)
+        answer.put("id_expert",id)
+
+        render(contentType: "application/json") {
+            answer
+        }
+
      }
 
     def getCurrentProblem(){

@@ -48,15 +48,12 @@ public class ExpertController implements Initializable {
     @FXML
     GridPane workTable;
 
-//    @FXML
     Pane subPanel;
 
     @FXML
     TabPane tabsPane;
 
     DataContainer dataContainer;
-
-    Stage stage;
     ObservableList criteriasArray = FXCollections.observableArrayList();
     ObservableList alternativesArray = FXCollections.observableArrayList();
     ObservableList marksArray = FXCollections.observableArrayList();
@@ -69,6 +66,7 @@ public class ExpertController implements Initializable {
                            java.util.ResourceBundle resources) {
 
         dataContainer = new DataContainer();
+
         AllertHandler.showLogin(dataContainer);
     }
 
