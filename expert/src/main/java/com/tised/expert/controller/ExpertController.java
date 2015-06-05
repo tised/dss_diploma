@@ -37,7 +37,7 @@ public class ExpertController implements Initializable {
             "Очень большое превосходство"};
 
     @FXML
-    Button restartButton, startMAIProcessing, nextOp, nextStage;
+    Button restartButton, startMAIProcessing, nextOp, nextStage, swapButton;
 
     @FXML
     ListView criteriaListView, alternativeListView, marks;
@@ -66,6 +66,8 @@ public class ExpertController implements Initializable {
                            java.util.ResourceBundle resources) {
 
         dataContainer = new DataContainer();
+        nextOp.setDisable(true);
+        swapButton.setDisable(true);
 
         AllertHandler.showLogin(dataContainer);
     }
@@ -106,9 +108,14 @@ public class ExpertController implements Initializable {
     public void startMAIProcessingClicked(){
 
         logger.trace("MAI processing started");
+        workTable.getChildren().clear();
+
         marks.getSelectionModel().select(0);
         maiProcess.startProcess(dataContainer.getMnemonicCriterias(),"criteria");
+
         nextStage.setDisable(true);
+        swapButton.setDisable(false);
+        nextOp.setDisable(false);
     }
 
     public void nextOpClicked(){

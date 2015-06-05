@@ -89,7 +89,7 @@ public class ResultPriorityFinder {
 
         for (int i = 1; i < workTable.getColumnConstraints().size()-1; i++){
 
-            workTable.add(new Label(String.valueOf(data.getCalculatedPrioritys()[i - 1][0])), i, 0);
+            workTable.add(new Label(String.valueOf( precision( data.getCalculatedPrioritys()[i - 1][0]) ) ), i, 0);
         }
 
         for (int i = 1; i < data.getCriterias().size()+1; i++){
@@ -119,12 +119,13 @@ public class ResultPriorityFinder {
 
         }
 
+
+        calculateResultMAI();
+
         for (int i = 0; i<workTable.getChildren().size(); i++){
 
             GridPane.setHalignment(workTable.getChildren().get(i), HPos.CENTER);
         }
-
-        calculateResultMAI();
     }
 
     private void calculateResultMAI(){
@@ -135,23 +136,31 @@ public class ResultPriorityFinder {
             float tmp = 0;
             for(int j = 1; j < workTable.getColumnConstraints().size()-1; j++){
 
-                tmp += Float.valueOf(getNodeFromGridPane(workTable,j, 0))*Float.valueOf(getNodeFromGridPane(workTable,j, i));
+                tmp += Float.valueOf(((Label)getNodeFromGridPane(workTable,j, 0)).getText())*Float.valueOf(((Label)getNodeFromGridPane(workTable,j, i)).getText());
             }
 
-            workTable.add(new Label(String.valueOf(tmp)), workTable.getColumnConstraints().size()-1, i);
+            workTable.add(new Label(String.valueOf(precision(tmp))), workTable.getColumnConstraints().size()-1, i);
             res[i-1] = precision(tmp);
         }
 
         float betterPriority = 0;
-
+        int index = 0;
         for (int i =0; i < res.length; i ++){
 
-            if(res[i]>betterPriority)
+            if(res[i]>betterPriority) {
                 betterPriority = res[i];
-
+                index = i;
+            }
         }
 
-        result.setText(result.getText() + " " + betterPriority);
+            for(int j = 1; j < workTable.getColumnConstraints().size()-1; j++){
+
+                getNodeFromGridPane(workTable, j, index+1).setStyle("-fx-border-color: green;");
+            }
+
+
+
+        result.setText(result.getText() + " " + precision(betterPriority));
 
         try {
             sendToServer(res);
@@ -189,14 +198,14 @@ public class ResultPriorityFinder {
         }
     }
 
-    private String getNodeFromGridPane(GridPane gridPane, int col, int row) {
+    private Node getNodeFromGridPane(GridPane gridPane, int col, int row) {
         for (Node node : gridPane.getChildren()) {
 
             if (GridPane.getColumnIndex(node) != null
                     && GridPane.getColumnIndex(node) == col
                     && GridPane.getRowIndex(node) != null
                     && GridPane.getRowIndex(node) == row) {
-                return ((Label)node).getText();
+                return node;
             }
         }
         return null;
@@ -206,5 +215,11 @@ public class ResultPriorityFinder {
         BigDecimal bd = new BigDecimal(Float.toString(d));
         bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
         return bd.floatValue();
+    }
+
+    private static Double precision(Double d) {
+        BigDecimal bd = new BigDecimal(Double.toString(d));
+        bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
+        return bd.doubleValue();
     }
 }
