@@ -38,7 +38,7 @@ public class ResultPriorityFinder {
     GridPane workTable;
     int subR, subC, sizeOfArr;
     DataContainer data;
-    Label result;
+    Label result, progressLabel;
     String dir = "..\\expert\\", nameOfFile = dir + "C.txt";
     Scene scene;
 
@@ -48,15 +48,17 @@ public class ResultPriorityFinder {
         this.workTable = (GridPane) scene.lookup("#resultTable");
         this.data = d;
         this.result = (Label) scene.lookup("#result");
+        this.progressLabel = (Label) scene.lookup("#progressLabel");
     }
 
 
     public void produceResultPriority(){
 
+        addToProgress("Начинаем поиск итоговой альтернативы. . .");
         subR = 0; subC = 1;
 
         workTable.getChildren().clear();
-
+        addToProgress("заполняем табилцу. . .");
         ColumnConstraints cc = new ColumnConstraints();
         cc.setFillWidth(true);
         cc.setHgrow(Priority.ALWAYS);
@@ -119,7 +121,7 @@ public class ResultPriorityFinder {
 
         }
 
-
+        addToProgress("Производим расчет итоговой альтернативы. . . ");
         calculateResultMAI();
 
         for (int i = 0; i<workTable.getChildren().size(); i++){
@@ -159,10 +161,11 @@ public class ResultPriorityFinder {
             }
 
 
-
+        addToProgress("Итоговая альтернатива найдена! ");
         result.setText(result.getText() + " " + precision(betterPriority));
-
+        addToProgress("Отправляем результат на сервер. . . ");
         try {
+
             sendToServer(res);
         } catch (IOException ex) {
             logger.error(ex);
@@ -170,6 +173,7 @@ public class ResultPriorityFinder {
     }
 
     private void sendToServer(float res[]) throws UnsupportedEncodingException, IOException{
+
 
         JSONArray mJSONArray = new JSONArray();
         for (int i = 0; i < res.length; i++){
@@ -191,7 +195,10 @@ public class ResultPriorityFinder {
         HttpEntity resEntity = response.getEntity();
 
         if (resEntity != null) {
-            System.out.println("server answer: " + EntityUtils.toString(resEntity));
+            addToProgress("Результаты успешно сохранены!");
+            String answer = EntityUtils.toString(resEntity);
+            System.out.println("server answer: " + answer);
+
         }
         if (resEntity != null) {
             resEntity.consumeContent();
@@ -221,5 +228,10 @@ public class ResultPriorityFinder {
         BigDecimal bd = new BigDecimal(Double.toString(d));
         bd = bd.setScale(2, BigDecimal.ROUND_HALF_UP);
         return bd.doubleValue();
+    }
+
+    private void addToProgress(String progress){
+
+        progressLabel.setText(progressLabel.getText() + "\n" + progress);
     }
 }

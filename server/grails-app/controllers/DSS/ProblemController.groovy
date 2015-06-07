@@ -49,7 +49,7 @@ class ProblemController {
             }
         }
 
-        def problem = MaiStorage.get(25)
+        def problem = MaiStorage.get(id)
         JSONArray answer = new JSONArray()
         answer.put(problem.problem)
         answer.put(new JSONArray(problem.alternatives))

@@ -5,6 +5,7 @@ import com.tised.admin_program.model.DataContainer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import org.codehaus.groovy.grails.web.json.JSONArray;
@@ -20,6 +21,7 @@ public class AddProblemWorker {
     DataContainer dataContainer;
     ListView alternatives, criterias;
     Scene scene;
+    Label progressLabel;
 
     public AddProblemWorker(DataContainer dataContainer, Scene scene){
 
@@ -27,10 +29,12 @@ public class AddProblemWorker {
         this.criterias = (ListView) scene.lookup("#criteriasList");
         this.alternatives = (ListView) scene.lookup("#alternativesList");
         this.dataContainer = dataContainer;
+        this.progressLabel = (Label) scene.lookup("#progressLabel");
     }
 
     public void initProblemInput(){
 
+        addToProgress("Начнинаем добавление новой альтернативы. . .");
         CustomTextField startCriteria = new CustomTextField();
         startCriteria.setPromptText("Введите критерий. . .");
         criteriasArray.add(startCriteria);
@@ -45,6 +49,7 @@ public class AddProblemWorker {
 
     public void packDataToJsonAndSend(String problem) throws IOException {
 
+        addToProgress("Пакуем данные в JSON для отправления. . .");
         JSONArray jsonAlternatives = new JSONArray();
         JSONArray jsonCriterias = new JSONArray();
         JSONArray dataToSend = new JSONArray();
@@ -63,8 +68,8 @@ public class AddProblemWorker {
         dataToSend.add(jsonCriterias);
         dataToSend.add(jsonAlternatives);
 
-        ServerSetter setter = new ServerSetter();
-
+        ServerSetter setter = new ServerSetter(scene);
+        addToProgress("Отправляем новую проблему на сервер. . .");
         setter.addProblemToServer(dataToSend);
     }
 
@@ -72,6 +77,11 @@ public class AddProblemWorker {
 
         alternatives.getItems().clear();
         criterias.getItems().clear();
+    }
+
+    private void addToProgress(String text){
+
+        progressLabel.setText(progressLabel.getText() + "\n"+text);
     }
 
 }

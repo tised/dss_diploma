@@ -97,7 +97,7 @@ class DiplomaDatabaseController {
         * params:
         * alternative_priority
         * id_expert*/
-
+        println "SET EXPERT RESULT PARAMS " + params
         def result = new ExpertResults()
         String priority_vector = String.valueOf(params.alternative_priority);
 
@@ -111,7 +111,7 @@ class DiplomaDatabaseController {
         result.setIdExpert(Integer.valueOf(params.id_expert))
         result.setResult_vector(res)
         //result.setIdProblem(Integer.valueOf(params.id_problem))
-        result.setIdProblem(1)
+        result.setIdProblem(Integer.valueOf(params.id_problem))
         result.save(flush: true)
 
         render "saved result"

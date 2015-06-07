@@ -1,6 +1,8 @@
 package com.tised.admin_program.controller;
 
 import com.tised.admin_program.support.Addresses;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -22,8 +24,16 @@ import java.io.UnsupportedEncodingException;
 public class ServerSetter {
 
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(ServerSetter.class);
+    private Scene scene;
+    private Label progressLabel;
 
     public ServerSetter(){}
+
+    public ServerSetter(Scene scene) {
+
+        this.scene = scene;
+        this.progressLabel = (Label) scene.lookup("#progressLabel");
+    }
 
     public String addExpertToServer(String name, String surName, String email){
 
@@ -47,6 +57,7 @@ public class ServerSetter {
                 String answer = EntityUtils.toString(resEntity);
                 logger.debug("server answer: " + answer);
                 result = answer;
+
             }
             if (resEntity != null) {
                 resEntity.consumeContent();
@@ -80,6 +91,7 @@ public class ServerSetter {
             if (resEntity != null) {
                 String answer = EntityUtils.toString(resEntity);
                 logger.debug("server answer: " + answer);
+
                 result = answer;
             }
             if (resEntity != null) {
@@ -118,6 +130,7 @@ public class ServerSetter {
 
         if (resEntity != null) {
             System.out.println("server answer: " + EntityUtils.toString(resEntity));
+            progressLabel.setText(progressLabel.getText() + "\nпроблема добавлена на сервер!");
         }
         if (resEntity != null) {
             resEntity.consumeContent();

@@ -1,6 +1,8 @@
 package com.tised.expert.controller;
 
 import com.tised.expert.support.Addresses;
+import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -24,8 +26,12 @@ import java.io.UnsupportedEncodingException;
 public class ServerSetter {
 
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(ServerSetter.class);
+    private Scene scene;
+    private Label progress;
 
-    public ServerSetter(){}
+    public ServerSetter(){
+
+    }
 
     public JSONObject checkLogin(String email, String password){
         JSONObject result = new JSONObject();
@@ -47,6 +53,7 @@ public class ServerSetter {
             if (resEntity != null) {
                 String answer = EntityUtils.toString(resEntity);
                 logger.debug("server answer: " + answer);
+
                 result = new JSONObject(answer);
             }
             if (resEntity != null) {

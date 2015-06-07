@@ -43,7 +43,7 @@ public class ExpertController implements Initializable {
     ListView criteriaListView, alternativeListView, marks;
 
     @FXML
-    Label problem, rightOp, leftOp, consistency, subCrit;
+    Label problem, rightOp, leftOp, consistency, subCrit, progressLabel;
 
     @FXML
     GridPane workTable;

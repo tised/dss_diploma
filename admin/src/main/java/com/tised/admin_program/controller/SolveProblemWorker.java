@@ -28,7 +28,7 @@ import java.util.List;
 public class SolveProblemWorker {
 
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(SolveProblemWorker.class);
-    private final Label result;
+    private Label result, solveProgressLabel;
     private DataContainer dataContainer;
     private GridPane problemsFromServerPane;
     private ServerGetter getter;
@@ -42,6 +42,7 @@ public class SolveProblemWorker {
         this.problemsFromServerPane = (GridPane) scene.lookup("#problemsFromServer");
         this.result = (Label) scene.lookup("#resultAlternative");
         tableWithResults = (TableView) scene.lookup("#tableWithResults");
+        this.solveProgressLabel = (Label) scene.lookup("#solveProgressLabel");
     }
 
     public void init() {
@@ -58,7 +59,7 @@ public class SolveProblemWorker {
     private void showAllProblems(){
 
         int sizeOfArr=dataContainer.getProblemsFromServer().length();
-
+        addToProgress("Загружаем все проблемы из сервера. . .");
         for (int i = 0; i < sizeOfArr; i ++){
 
             try {
@@ -88,7 +89,7 @@ public class SolveProblemWorker {
                     logger.debug("clicked show current problem with id === " + getCurrentProblemButton.getId());
 
                     result.setId(getCurrentProblemButton.getId());
-
+                    addToProgress("Загружаем проблему с номером " + getCurrentProblemButton.getId());
                     JSONArray curProblemArray = getter.downloadCurProblem(getCurrentProblemButton.getId());
 
                     int row1 = 0;
@@ -165,6 +166,11 @@ public class SolveProblemWorker {
             }
         }
         return stringArray;
+    }
+
+    private void addToProgress(String text){
+
+        solveProgressLabel.setText(solveProgressLabel.getText() + "\n"+text);
     }
 
 }

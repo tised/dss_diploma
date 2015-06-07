@@ -8,10 +8,14 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
+import java.io.File;
 import java.io.IOException;
 
 public class RootLayoutController implements Initializable{
@@ -35,7 +39,7 @@ public class RootLayoutController implements Initializable{
 	TabPane tabs;
 
 	@FXML
-	Label resultAlternative;
+	Label resultAlternative, progressLabel, solveProgressLabel;
 
 	@FXML
 	Tab addProblemTab, solveProblemTab;
@@ -71,6 +75,8 @@ public class RootLayoutController implements Initializable{
 
         logger.debug("clicked add criteria");
 
+		addToProgress("Добавлен новый критерий");
+
 		TextField newCriteria = new TextField();
 		newCriteria.setPromptText("Введите критерий. . .");
 
@@ -81,7 +87,7 @@ public class RootLayoutController implements Initializable{
 	public void addAlternativeClicked(){
 
 		logger.debug("clicked add alternative");
-
+		addToProgress("Добавлена новая альтернатива");
 		TextField newAlternative = new TextField();
 		newAlternative.setPromptText("Введите альтернативу. . .");
 
@@ -115,12 +121,12 @@ public class RootLayoutController implements Initializable{
 
 	@FXML
 	public void getResultButtonClick(){
-
+		addToProgressSolveProblem("рассчитываем итоговую альтернативу для проблемы с номером " + resultAlternative.getId());
 		ServerGetter getter = new ServerGetter();
 		int resID = getter.getResultFromProblem(resultAlternative.getId());
 
 		((TableColumn)tableWithResults.getColumns().get(resID)).setStyle("-fx-border-color: green;");
-
+		addToProgressSolveProblem("лучшая альтерантива по итогу коллективного решения " + resID);
 		resultAlternative.setText("Результат: " + String.valueOf(resID));
 	}
 	
@@ -132,6 +138,9 @@ public class RootLayoutController implements Initializable{
 		problemWorker = new AddProblemWorker(dataContainer, scene);
 		solveWorker = new SolveProblemWorker(scene, dataContainer);
 
+		Image image = new Image(this.getClass().getClassLoader().getResource("dss_image.png").toExternalForm());
+		ImageView iv = (ImageView) scene.lookup("#programImage");
+		iv.setImage(image);
 		tabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 
 			@Override
@@ -157,6 +166,16 @@ public class RootLayoutController implements Initializable{
 	public void setScene(Scene scene){
 
 		this.scene = scene;
+	}
+
+	private void addToProgress(String text){
+
+		progressLabel.setText(progressLabel.getText() + "\n"+text);
+	}
+
+	private void addToProgressSolveProblem(String text){
+
+		solveProgressLabel.setText(solveProgressLabel.getText() + "\n"+text);
 	}
 
 }

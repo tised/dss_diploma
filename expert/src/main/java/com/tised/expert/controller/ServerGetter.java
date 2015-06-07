@@ -2,6 +2,7 @@ package com.tised.expert.controller;
 
 import com.tised.expert.model.DataContainer;
 import com.tised.expert.support.Addresses;
+import javafx.scene.Scene;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.client.HttpClient;
@@ -25,6 +26,11 @@ import java.util.logging.Logger;
 public class ServerGetter {
 
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(ServerGetter.class);
+
+
+    public ServerGetter(){
+
+    }
 
     public void getProblem(DataContainer data) throws IOException {
 
