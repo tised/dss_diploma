@@ -1,8 +1,10 @@
 package com.tised.admin_program.controller;
 
+import com.tised.admin_program.CustomControls.CustomTextField;
 import com.tised.admin_program.model.DataContainer;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.Scene;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import org.codehaus.groovy.grails.web.json.JSONArray;
@@ -17,17 +19,19 @@ public class AddProblemWorker {
     ObservableList alternativesArray = FXCollections.observableArrayList();
     DataContainer dataContainer;
     ListView alternatives, criterias;
+    Scene scene;
 
-    public AddProblemWorker(ListView c, ListView a, DataContainer dataContainer){
+    public AddProblemWorker(DataContainer dataContainer, Scene scene){
 
-        this.criterias = c;
-        this.alternatives = a;
+        this.scene = scene;
+        this.criterias = (ListView) scene.lookup("#criteriasList");
+        this.alternatives = (ListView) scene.lookup("#alternativesList");
         this.dataContainer = dataContainer;
     }
 
     public void initProblemInput(){
 
-        TextField startCriteria = new TextField();
+        CustomTextField startCriteria = new CustomTextField();
         startCriteria.setPromptText("Введите критерий. . .");
         criteriasArray.add(startCriteria);
 

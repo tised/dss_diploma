@@ -30,21 +30,18 @@ public class SolveProblemWorker {
     final static org.apache.logging.log4j.Logger logger = LogManager.getLogger(SolveProblemWorker.class);
     private final Label result;
     private DataContainer dataContainer;
-    private GridPane problemsFromServerPane;//, currentProblemPane;
+    private GridPane problemsFromServerPane;
     private ServerGetter getter;
     private Scene scene;
     private TableView tableWithResults;
 
-    public SolveProblemWorker(Scene scene, DataContainer dataContainer, GridPane problemsFromSever, Label res){
+    public SolveProblemWorker(Scene scene, DataContainer dataContainer){
 
-        this.dataContainer = dataContainer;
-        this.problemsFromServerPane = problemsFromSever;
-        //this.currentProblemPane = currentProblemFromServer;
-        this.result = res;
         this.scene = scene;
+        this.dataContainer = dataContainer;
+        this.problemsFromServerPane = (GridPane) scene.lookup("#problemsFromServer");
+        this.result = (Label) scene.lookup("#resultAlternative");
         tableWithResults = (TableView) scene.lookup("#tableWithResults");
-
-
     }
 
     public void init() {

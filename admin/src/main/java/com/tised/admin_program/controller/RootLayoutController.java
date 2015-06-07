@@ -129,8 +129,8 @@ public class RootLayoutController implements Initializable{
 		dataContainer = new DataContainer();
 		addInfoProblemPanel.setDisable(true);
 
-		problemWorker = new AddProblemWorker(criteriasList, alternativesList, dataContainer);
-		solveWorker = new SolveProblemWorker(scene, dataContainer, problemsFromServer, resultAlternative);
+		problemWorker = new AddProblemWorker(dataContainer, scene);
+		solveWorker = new SolveProblemWorker(scene, dataContainer);
 
 		tabs.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
 
