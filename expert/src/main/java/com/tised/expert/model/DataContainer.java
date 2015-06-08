@@ -8,6 +8,16 @@ import java.util.ArrayList;
 public class DataContainer {
 
     private String problem;
+
+    public Boolean getIsAllLooked() {
+        return isAllLooked;
+    }
+
+    public void setIsAllLooked(Boolean isAllLooked) {
+        this.isAllLooked = isAllLooked;
+    }
+
+    private Boolean isAllLooked;
     private ArrayList<String> alternatives, criterias, mnemonicAlternatives, mnemonicCriterias;
     private float[][] calculatedCriterias;
     private double[][] calculatedPrioritys;
@@ -88,9 +98,21 @@ public class DataContainer {
         this.criterias = criterias;
     }
 
+    public void clearData(){
+
+        this.alternatives.clear();
+        this.criterias.clear();
+        this.mnemonicAlternatives.clear();
+        this.mnemonicCriterias.clear();
+        this.problem = "";
+    }
 
     public DataContainer(){
 
+        this.alternatives = new ArrayList<>();
+        this.criterias = new ArrayList<>();
+        this.mnemonicAlternatives = new ArrayList<>();
+        this.mnemonicCriterias = new ArrayList<>();
     }
     
 }

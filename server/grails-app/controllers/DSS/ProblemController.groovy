@@ -50,14 +50,18 @@ class ProblemController {
         }
 
         def problem = MaiStorage.get(id)
-        JSONArray answer = new JSONArray()
-        answer.put(problem.problem)
-        answer.put(new JSONArray(problem.alternatives))
-        answer.put(new JSONArray(problem.criterias))
-        answer.put(problem.id)
-        render(contentType: "application/json") {
-            answer
+        if (problem != null) {
+            JSONArray answer = new JSONArray()
+            answer.put(problem.problem)
+            answer.put(new JSONArray(problem.alternatives))
+            answer.put(new JSONArray(problem.criterias))
+            answer.put(problem.id)
+            render(contentType: "application/json") {
+                answer
+            }
         }
+        else
+            render "all looked";
     }
 
     def setExpertResult(){

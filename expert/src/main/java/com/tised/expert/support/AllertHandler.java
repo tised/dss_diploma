@@ -109,4 +109,12 @@ public class AllertHandler {
 
         return DigestUtils.md5Hex(value + salt);
     }
+
+    public static void showAllLooked() {
+
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setHeaderText("Внимание!");
+        alert.setContentText("Новых альтернатив нет. Попробуйте позже!");
+        alert.showAndWait();
+    }
 }

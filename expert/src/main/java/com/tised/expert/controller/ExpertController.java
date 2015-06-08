@@ -65,16 +65,19 @@ public class ExpertController implements Initializable {
     public void initialize(java.net.URL location,
                            java.util.ResourceBundle resources) {
 
-        dataContainer = new DataContainer();
-        nextOp.setDisable(true);
-        swapButton.setDisable(true);
 
-        AllertHandler.showLogin(dataContainer);
     }
 
     public void restartButtonClick(){
 
         logger.debug("clicked restart button");
+
+
+
+        dataContainer.clearData();
+        maiProcess.valOfAlternatives = 0;
+        getFreshProblem();
+
     }
 
     private void initStartData(){
@@ -146,9 +149,24 @@ public class ExpertController implements Initializable {
 
     public void init(){
 
+        dataContainer = new DataContainer();
+        nextOp.setDisable(true);
+        swapButton.setDisable(true);
+
+        AllertHandler.showLogin(dataContainer);
+
         logger.trace("Controller initialized");
 
         maiProcess = new DataProcessing(dataContainer, scene);//workTable, leftOp, rightOp, consistency, subCrit);
+
+        getFreshProblem();
+    }
+
+    private void getFreshProblem(){
+
+        criteriaListView.getItems().clear();
+        alternativeListView.getItems().clear();
+        problem.setText("Проблема: ");
 
         ServerGetter getter = new ServerGetter();
         try {
@@ -157,10 +175,12 @@ public class ExpertController implements Initializable {
             e.printStackTrace();
         }
 
-        subPanel = (Pane) scene.lookup("#subPanel");
-        subPanel.setVisible(false);
+        if (!dataContainer.getIsAllLooked()) {
+            subPanel = (Pane) scene.lookup("#subPanel");
+            subPanel.setVisible(false);
 
-        initStartData();
+            initStartData();
+        }
     }
 
     public void setScene(Scene scene) {

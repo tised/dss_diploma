@@ -58,10 +58,15 @@ public class ResultPriorityFinder {
         subR = 0; subC = 1;
 
         workTable.getChildren().clear();
+        workTable.getRowConstraints().clear();
+        workTable.getColumnConstraints().clear();
+
         addToProgress("заполняем табилцу. . .");
         ColumnConstraints cc = new ColumnConstraints();
         cc.setFillWidth(true);
         cc.setHgrow(Priority.ALWAYS);
+        workTable.getColumnConstraints().add(cc);
+        logger.debug("criterias size == " + data.getCriterias().size() + "alt == " + data.getAlternatives().size());
 
         for (int i = 0; i < data.getCriterias().size() + 1; i++) {
 
@@ -71,7 +76,7 @@ public class ResultPriorityFinder {
         RowConstraints rc = new RowConstraints();
         rc.setFillHeight(true);
         rc.setVgrow(Priority.ALWAYS);
-
+        workTable.getRowConstraints().add(rc);
         for (int i = 0; i < data.getAlternatives().size() + 1; i++) {
 
             workTable.getRowConstraints().add(rc);

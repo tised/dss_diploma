@@ -2,6 +2,7 @@ package com.tised.expert.controller;
 
 import com.tised.expert.model.DataContainer;
 import com.tised.expert.support.Addresses;
+import com.tised.expert.support.AllertHandler;
 import javafx.scene.Scene;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
@@ -50,6 +51,7 @@ public class ServerGetter {
             String result = EntityUtils.toString(resEntity);
             logger.debug("server answer: " + result);
 
+            if (!result.equals("all looked")){
             try {
                 JSONArray recievedProblem = new JSONArray(result);
 
@@ -76,11 +78,17 @@ public class ServerGetter {
 
                 data.setCriterias(list);
                 data.setMnemonicCriterias(mList);
-
+                data.setIsAllLooked(false);
             } catch (JSONException ex) {
                 logger.error(ex);
             }
         }
+            else {
+                data.setIsAllLooked(true);
+                AllertHandler.showAllLooked();
+            }
+        }
+
         if (resEntity != null) {
             resEntity.consumeContent();
         }
