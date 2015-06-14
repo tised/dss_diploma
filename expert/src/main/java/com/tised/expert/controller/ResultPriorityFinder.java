@@ -138,6 +138,7 @@ public class ResultPriorityFinder {
     private void calculateResultMAI(){
 
         float res[] = new float[data.getAlternatives().size()];
+        result.setText("результат: ");
 
         for (int i = 1; i < workTable.getRowConstraints().size()-1; i ++){
             float tmp = 0;

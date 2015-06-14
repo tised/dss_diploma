@@ -38,7 +38,8 @@ class ProblemController {
 
     def getProblem(){
 
-
+       // log.debug("GET PROBLEM PARAMS ==" + params)
+        println "GET PROBLEM PARAMS" + params
         def allProblems = MaiStorage.getAll()
         int id = 0;
 

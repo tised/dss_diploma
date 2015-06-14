@@ -89,15 +89,14 @@ public class AllertHandler {
         result.ifPresent(usernamePassword -> {
 
             if(!usernamePassword.getValue().equals("OK")){
-                logger.debug("id expert is == " + serverAnswer[0].getInt("id_expert"));
+                logger.debug("not right id expert is == " + serverAnswer[0].getInt("id_expert"));
                 logger.debug(usernamePassword.getKey() + " === " + usernamePassword.getValue());
                 dialog.showAndWait();
             }
             else{
-                logger.debug("id expert is == " + serverAnswer[0].getInt("id_expert"));
+                logger.debug("right id expert is == " + serverAnswer[0].getInt("id_expert"));
                 logger.debug(usernamePassword.getKey() + " === " + usernamePassword.getValue());
                 data.setIdExpert(serverAnswer[0].getInt("id_expert"));
-
             }
 
         });

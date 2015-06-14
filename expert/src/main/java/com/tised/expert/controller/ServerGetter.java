@@ -40,7 +40,7 @@ public class ServerGetter {
 
 
         MultipartEntity entity = new MultipartEntity();
-        entity.addPart("id_expert", new StringBody("1"));
+        entity.addPart("id_expert", new StringBody(String.valueOf(data.getIdExpert())));
         post.setEntity(entity);
 
         HttpResponse response = client.execute(post);
